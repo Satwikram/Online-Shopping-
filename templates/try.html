@@ -1,0 +1,263 @@
+{% load static %}
+{% static "images" as base %}
+<head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+        <!--jQuery library-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+        <!--Latest compiled and minified JavaScript-->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Navbar in Bootstrap</title>
+
+		<link rel="stylesheet" href="{% static 'css/products.css' %}">
+    </head>
+<body>
+          <nav class="navbar navbar-dark navbar-fixed-top" style="background-color: #aeb3a6;">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                      <i class="fa fa-bars"></i>
+                    </button>
+                    <a class="navbar-brand" href="#">Lifestyle Store</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="myNavbar">
+                  <form class="navbar-form navbar-left">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+      </form>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href=""><span class="glyphicon glyphicon-shopping-cart"></span> Cart<span class="badge"></span></a></li>
+                        <li><a href=""><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+                      <li><a href=""><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+  <div class="menu container-fluid text-center hidden-xs" style="position:relative;top:4em; padding-bottom:5px;">
+    <div class="container-fluid">
+      <div class="row">
+
+        <div class="col-sm-2">
+          <button class="btn btn-block dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="background-color:#fff;">
+    Men
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <li><a href="#">Footwear</a></li>
+    <li><a href="#">Top wear</a></li>
+    <li><a href="#">Sports wear</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="#">Separated link</a></li>
+  </ul>
+        </div>
+
+        <div class="col-sm-2">
+          <button class="btn btn-block dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="background-color:#fff;">
+    Women
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <li><a href="#">Action</a></li>
+    <li><a href="#">Another action</a></li>
+    <li><a href="#">Something else here</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="#">Separated link</a></li>
+  </ul>
+        </div>
+
+        <div class="col-sm-2">
+          <button class="btn btn-block dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="background-color:#fff;">
+    Cameras
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <li><a href="#">Action</a></li>
+    <li><a href="#">Another action</a></li>
+    <li><a href="#">Something else here</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="#">Separated link</a></li>
+  </ul>
+        </div>
+
+        <div class="col-sm-2">
+          <button class="btn btn-block dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="background-color:#fff;">
+    Electronics
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <li><a href="#">Mobiles</a></li>
+    <li><a href="#">Laptops</a></li>
+    <li><a href="#">Accessories</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="#">Separated link</a></li>
+  </ul>
+        </div>
+
+        <div class="col-sm-2">
+          <button class="btn btn-block dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="background-color:#fff;">
+    Books
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <li><a href="#">Action</a></li>
+    <li><a href="#">Another action</a></li>
+    <li><a href="#">Something else here</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="#">Separated link</a></li>
+  </ul>
+        </div>
+
+        <div class="col-sm-2">
+          <button class="btn btn-block" aria-expanded="true" style="background-color:#fff;">Offer Zone</button>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+  <header>
+    <div class="col-sm-12 jumbotron text-center">
+      <h2>Welcome to our Lifestyle Store!</h2>
+      <h6>We have the best cameras,watches and shirts for you. No need to hunt around, we have all in one place</h6>
+    </div>
+  </header>
+
+  <!--Carousel Trial-->
+
+  <!---->
+  <section>
+
+    <div class="container col-sm-10 col-sm-offset-1">
+
+      <div class="row">
+
+       {% for prod in prods %}
+
+        <div class="col-sm-4">
+
+          <div class="thumbnail">
+
+            <img src="{{base}}/{{prod.img}}" class="img-responsive" alt="">
+
+            <div class="caption">
+
+              <h4>{{prod.name}}</h4>
+              <h6>{{prod.des}}</h6>
+              <h5><a href="" class="label label-success">Rs.{{prod.price}}</a></h5>
+              <a href="#" class="btn btn-primary btn-block">Add to Cart</a>
+              <a href="buy" class="btn btn-primary btn-block">Buy Now</a>
+
+
+
+            </div>
+
+          </div><!-- End of div thumbnail-->
+        </div><!--End of div col-sm-4 -->
+
+          {% endfor %}
+      </div><!-- End of div row -->
+
+     </div>
+      <div class="container col-sm-10 col-sm-offset-1 page">
+        <div class="col-sm-12">
+
+          <nav aria-label="Page navigation">
+            <ul class="pagination">
+              <li class="disabled">
+                <a href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li class="active"><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
+              <li><a href="#">5</a></li>
+              <li><a href="#">6</a></li>
+              <li><a href="#">7</a></li>
+              <li><a href="#">8</a></li>
+              <li>
+                <a href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+
+        </div>
+      </div>
+
+  </section>
+
+  <footer class="page-footer container-fluid col-sm-12">
+    <hr>
+    <div class="container">
+      <div class="col-sm-4">
+        <h4>Help</h4>
+        <ul class="list-unstyled quick-links">
+          <li><a href="">Payments</a></li>
+
+          <li><a href="">Shipping</a></li>
+
+          <li><a href="">Cancellations & Return</a></li>
+
+          <li><a href="">FAQ</a></li>
+
+        </ul>
+      </div>
+
+      <div class="col-sm-4">
+        <h4>Lifestyle Store</h4>
+        <ul class="list-unstyled quick-links">
+          <li><a href="">Contact Us</a></li>
+
+          <li><a href="">About Us</a></li>
+          <li><a href="">Careers</a></li>
+          <li><a href="">Stories</a></li>
+          <li><a href="">Sell With Us</a></li>
+        </ul>
+      </div>
+
+      <div class="col-sm-4">
+        <h4>MISC</h4>
+        <ul class="list-unstyled quick-links">
+          <li><a href="">Online Shopping</a></li>
+          <li><a href="">Gift Card</a></li>
+          <li><a href=""></a></li>Sitemap
+        </ul>
+      </div>
+
+    </div>
+    <div class="container-fluid col-lg-10 col-lg-offset-1">
+      <div class="row">
+        <hr>
+        <div class="col-sm-4">
+          <span class="glyphicon glyphicon-map-marker"></span>
+          <h3 class="text-center">&nbsp;TRACK YOUR ORDER</h3>
+        </div>
+
+        <div class="col-sm-4">
+          <span class="glyphicon glyphicon-refresh"></span>
+          <h3 class="text-center">&nbsp;&nbsp;FREE & EASY RETURNS</h3>
+
+            </div>
+
+        <div class="col-sm-4">
+          <span class="glyphicon glyphicon-remove-circle"></span>
+          <h3 class="text-center">ONLINE CANCELLATIONS</h3>
+        </div>
+          </div>
+        </div>
+        <hr>
+      </div>
+    </div>
+
+      </footer>
+</body>
