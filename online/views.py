@@ -80,6 +80,7 @@ def register(request):
 
 
 
+
     else:
         return render(request, 'register.html')
 
