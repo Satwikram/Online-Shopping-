@@ -1,3 +1,5 @@
+import http
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
@@ -17,7 +19,15 @@ def home(request):
 
 def register(request):
 
-    if request.method == 'POST':
+    if request.method == 'POST' and 'b1' in request.POST:
+        email = request.POST['email']
+        otp1 = randint(1000, 9999)
+        sub = "Email Verification"
+        msg = "Your one time password is:"
+
+        send_mail(sub, msg, EMAIL_HOST_USER, [email], fail_silently=False)
+
+    if request.method == 'POST' and 'b2' in request.POST:
         fname = request.POST['fname']
         lname = request.POST['lname']
         email = request.POST['email']
@@ -26,22 +36,9 @@ def register(request):
         password1 = request.POST['psw-repeat']
         otp = request.POST['otp']
 
-        otp1 = randint(1000,9999)
-        sub = "Email Verification"
-        msg = "Your one time password is:"
-
-        send_mail(sub, msg, EMAIL_HOST_USER, [email],otp1, fail_silently = False)
-
-        if otp != otp1:
-            messages.info(request, "Incorrect Otp")
-            return redirect("register")
-
-
         if password1 != password :
             messages.info(request, "Password Mismatch!")
             return redirect("register")
-
-
 
         if UserRegisteration.objects.filter(phone = ph).exists():
 
@@ -52,6 +49,10 @@ def register(request):
 
             messages.info(request, "Mail Id Exist, Please login with the same ")
             return redirect('register')
+
+        elif otp != otp1:
+            messages.info(request, "Incorrect Otp")
+            return redirect("register")
 
 
         else:
@@ -132,7 +133,15 @@ def forgot(request):
 
 def otp(request):
     otp = randint(1000, 9999)
-    return otp
+    sub = "Email Verification"
+    msg = "Your one time password is:"
+    print(otp)
+    return HttpResponseRedirect('register')
+
+    #send_mail(sub, msg, EMAIL_HOST_USER, [email], otp, fail_silently= False)
+
+
+
 
 
 

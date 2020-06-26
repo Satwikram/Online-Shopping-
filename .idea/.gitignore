@@ -5,9 +5,9 @@
 # .gitignore
 # Project files and directories
 /shopping/settings.py
-/shopping/static/
-/shopping/tmp/
-/shopping/media/
+static/
+tmp/
+media/
 
 # Django #
 *.log
