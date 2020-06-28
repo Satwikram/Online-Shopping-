@@ -4,18 +4,19 @@
 
 # .gitignore
 # Project files and directories
-/shopping/settings.py
-static/
-tmp/
-/shopping/media/
-
+settings.py
+static
+tmplates
+media
+assets
+rm -rf <repo_folder>/.git
 # Django #
 *.log
 *.pot
 *.pyc
 __pycache__
 db.sqlite3
-media/
+media
 
 # Backup files # 
 *.bak 

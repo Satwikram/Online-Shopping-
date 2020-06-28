@@ -3,11 +3,11 @@
 /workspace.xml
 
 # .gitignore
-# Project files and directories
-/shopping/settings.py
+shopping/settings.py
 static/
-tmp/
+tmplates/
 media/
+assets/
 
 # Django #
 *.log

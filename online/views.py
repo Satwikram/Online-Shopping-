@@ -11,6 +11,9 @@ from main.views import products1
 from django.core.mail import send_mail
 from shopping.settings import EMAIL_HOST_USER
 from random import randint
+from django.template import Context
+from django.template.loader import render_to_string, get_template
+from django.core.mail import EmailMessage
 
 
 
@@ -21,11 +24,18 @@ def register(request):
 
     if request.method == 'POST' and 'b1' in request.POST:
         email = request.POST['email']
+        fname = request.POST['fname']
         otp1 = randint(1000, 9999)
         sub = "Email Verification"
-        msg = "Your one time password is:"
+        ctx = {'user': fname, 'otp': otp1 }
 
-        send_mail(sub, msg, EMAIL_HOST_USER, [email], fail_silently=False)
+        message = get_template('otp.html').render(ctx)
+
+        msg = EmailMessage(sub,message,EMAIL_HOST_USER,[email])
+
+        msg.content_subtype = "html"  # Main content is now text/html
+        msg.send()
+        print("Mail successfully sent")
 
     if request.method == 'POST' and 'b2' in request.POST:
         fname = request.POST['fname']
@@ -50,9 +60,11 @@ def register(request):
             messages.info(request, "Mail Id Exist, Please login with the same ")
             return redirect('register')
 
-        elif otp != otp1:
-            messages.info(request, "Incorrect Otp")
-            return redirect("register")
+
+
+        #elif otp != otp1:
+           # messages.info(request, "Incorrect Otp")
+            #return redirect("register")
 
 
         else:
@@ -137,6 +149,9 @@ def otp(request):
     msg = "Your one time password is:"
     print(otp)
     return HttpResponseRedirect('register')
+
+
+
 
     #send_mail(sub, msg, EMAIL_HOST_USER, [email], otp, fail_silently= False)
 
