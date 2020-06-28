@@ -13,10 +13,12 @@
            M.toast({html: 'I am a toast!', displayLength : 2000});
     </script>
 
+    <script src="{% static 'js/register.js' %}"></script>
 
 
 
-<form action ="register" method = "post">
+
+<form name = "myform" action ="register" method = "post">
     {% csrf_token %}
   <div class="container">
     <h1>Register</h1>
@@ -53,7 +55,7 @@
     <hr>
     <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
 
-    <button type="submit" name ="b1" class="waves-effect waves-light btn" onsubmit="return false">Send Otp</button>
+    <button type="submit" name ="b1" class="waves-effect waves-light btn" onsubmit="return handleForm()">Send Otp</button>
     <button type="submit" name ="b2" class="waves-effect waves-light btn">Sign Up</button>
 
 

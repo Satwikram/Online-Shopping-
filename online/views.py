@@ -35,7 +35,7 @@ def register(request):
 
         msg.content_subtype = "html"  # Main content is now text/html
         msg.send()
-        print("Mail successfully sent")
+        messages.info(request, "otp successfully sent")
 
     if request.method == 'POST' and 'b2' in request.POST:
         fname = request.POST['fname']
