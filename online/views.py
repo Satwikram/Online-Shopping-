@@ -66,7 +66,7 @@ def register(request):
             recepient = email
             print("Email is:",recepient)
             send_mail(subject, message, EMAIL_HOST_USER, [recepient], fail_silently = False)
-            return redirect('main/Main')
+            return redirect('register')
 
     else:
         return render(request, 'register.html')
