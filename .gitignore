@@ -4,11 +4,11 @@
 
 # .gitignore
 # Project files and directories
-settings.py
 static
-tmplates
+templates
 media
 assets
+secret.py
 rm -rf <repo_folder>/.git
 # Django #
 *.log

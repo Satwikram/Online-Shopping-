@@ -4,70 +4,69 @@
 <head>
     <meta charset="UTF-8">
     <title>register</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <body>
 
-    <link rel="stylesheet" href="{% static 'css/materialize.css' %}">
+<link rel="stylesheet" href="{% static 'css/materialize.css' %}">
 
-    <script>
-           M.toast({html: 'I am a toast!', displayLength : 2000});
-    </script>
-
-    <script src="{% static 'js/register.js' %}"></script>
+<script>
+         M.toast({html: 'I am a toast!', displayLength : 2000});
 
 
+</script>
+
+<!--<script src="{% static 'js/register.js' %}"></script>-->
 
 
-<form name = "myform" action ="register" method = "post">
-    {% csrf_token %}
-  <div class="container">
+{% csrf_token %}
+<div class="container">
+
     <h1>Register</h1>
 
-      {% if messages %}
-      {% for message in messages %}
-        <a onclick="M.toast({html: 'I am a toast'})" class="btn">{{message}}</a>
-      {% endfor %}
+    {% if messages %}
+    {% for message in messages %}
+    <a onclick="M.toast({html: 'I am a toast'})" class="btn">{{message}}</a>
+    {% endfor %}
     {% endif %}
 
     <p>Please fill in this form to create an account.</p>
     <hr>
 
-      <label for="fname"><b>First name:</b></label>
-      <input type="text" placeholder="Enter First Name" name="fname" required><br><br>
-      <label for="lname"><b>Last name:</b></label>
-      <input type="text" placeholder="Enter Last Name" name="lname" required><br><br>
+    <label for="fname"><b>First name:</b></label>
+    <input type="text" placeholder="Enter First Name" id="fname" name="fname"><br><br>
+    <label for="lname"><b>Last name:</b></label>
+    <input type="text" placeholder="Enter Last Name" id="lname" name="lname"><br><br>
 
 
     <label for="email"><b>Email</b></label>
-    <input type="text" placeholder="Enter a valid Email, an otp will be sent" name="email" required>
+    <input type="text" placeholder="Enter a valid Email, an otp will be sent" name="email" id="email">
 
     <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="psw" required>
+    <input type="password" placeholder="Enter Password" id="psw" name="psw">
 
     <label for="psw-repeat"><b>Repeat Password</b></label>
-    <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+    <input type="password" placeholder="Repeat Password" id="psw_repeat" name="psw-repeat">
 
     <label for="ph"><b>Phone</b></label>
-    <input type="number" placeholder="Phone" name="ph" required>
-
-    <label for="otp"><b>Otp</b></label>
-    <input type="number" placeholder="An Otp is sent your Mail ID" name="otp">
+    <input type="number" placeholder="Phone" id="ph" name="ph">
+    
     <hr>
     <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
 
-    <button type="submit" name ="b1" class="waves-effect waves-light btn" onsubmit="return handleForm()">Send Otp</button>
-    <button type="submit" name ="b2" class="waves-effect waves-light btn">Sign Up</button>
+    <button type="submit" name="b1" class="waves-effect waves-light btn" onclick="sendOtp()">Send Otp</button>
+    <button type="submit" name="b2" class="waves-effect waves-light btn" onclick="register()">Sign Up</button>
 
 
-  </div>
+</div>
 
-  <div class="container signin">
+<div class="container signin">
     <p>Already have an account? <a href="login">Sign in</a>.</p>
 
 
-  </div>
-</form>
-
+</div>
 
 
 </body>

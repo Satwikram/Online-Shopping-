@@ -22,29 +22,13 @@ def home(request):
 
 def register(request):
 
-    if request.method == 'POST' and 'b1' in request.POST:
-        email = request.POST['email']
-        fname = request.POST['fname']
-        otp1 = randint(1000, 9999)
-        sub = "Email Verification"
-        ctx = {'user': fname, 'otp': otp1 }
-
-        message = get_template('otp.html').render(ctx)
-
-        msg = EmailMessage(sub,message,EMAIL_HOST_USER,[email])
-
-        msg.content_subtype = "html"  # Main content is now text/html
-        msg.send()
-        messages.info(request, "otp successfully sent")
-
-    if request.method == 'POST' and 'b2' in request.POST:
+    if request.method == 'POST':
         fname = request.POST['fname']
         lname = request.POST['lname']
         email = request.POST['email']
         password = request.POST['psw']
         ph = request.POST['ph']
         password1 = request.POST['psw-repeat']
-        otp = request.POST['otp']
 
         if password1 != password :
             messages.info(request, "Password Mismatch!")
@@ -59,13 +43,6 @@ def register(request):
 
             messages.info(request, "Mail Id Exist, Please login with the same ")
             return redirect('register')
-
-
-
-        #elif otp != otp1:
-           # messages.info(request, "Incorrect Otp")
-            #return redirect("register")
-
 
         else:
             online_user = UserRegisteration.objects.create(first_name = fname, last_name = lname,
@@ -89,10 +66,7 @@ def register(request):
             recepient = email
             print("Email is:",recepient)
             send_mail(subject, message, EMAIL_HOST_USER, [recepient], fail_silently = False)
-            return redirect('register')
-
-
-
+            return redirect('main/Main')
 
     else:
         return render(request, 'register.html')
@@ -144,16 +118,27 @@ def forgot(request):
         return render(request, 'forgot.html')
 
 def otp(request):
-    otp = randint(1000, 9999)
-    sub = "Email Verification"
-    msg = "Your one time password is:"
-    print(otp)
-    return HttpResponseRedirect('register')
+
+    if request.method == 'POST':
+        email = request.POST['email']
+        fname = request.POST['fname']
+        otp1 =  request.POST['otp']
+        # otp = request.POST['otp']
+        sub = "Email Verification"
+        ctx = {'user': fname, 'otp': otp1}
+
+        message = get_template('otp.html').render(ctx)
+
+        msg = EmailMessage(sub, message, EMAIL_HOST_USER, [email])
+
+        msg.content_subtype = "html"  # Main content is now text/html
+        msg.send()
+
+        messages.info(request, "otp successfully sent")
+
+        return redirect('register')
 
 
-
-
-    #send_mail(sub, msg, EMAIL_HOST_USER, [email], otp, fail_silently= False)
 
 
 
