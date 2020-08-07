@@ -40,9 +40,6 @@ def products1():
     canon.des = 'Camera with 4K recording and ultimate graphics'
 
 
-
-
-
     prods = [prod1, top, polo, coarter, canon, prod1, top, polo, coarter, canon,prod1, top, polo, coarter, canon,]
 
     return prods
@@ -79,7 +76,7 @@ def sell(request):
             filename = str(uploaded_image.name)
             fs = FileSystemStorage(location=folder)  # defaults to DATASTORE
             name = fs.save(uploaded_image.name, uploaded_image)
-            mediapath = folder + 'user.name' + "{}"
+            mediapath = folder + "{}"
             filepath = os.path.join(mediapath).format(name)
             print(filepath)
 
