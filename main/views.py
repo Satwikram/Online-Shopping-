@@ -1,5 +1,6 @@
 import os
-
+from datetime import datetime
+from datetime import date
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -64,6 +65,13 @@ def sell(request):
         price = request.POST['price']
         des = request.POST['des']
         print(des)
+
+        now = datetime.now()
+        current_time = now.strftime("%H:%M:%S")
+        print("Current Time =", current_time)
+
+        today = date.today()
+        print("Today's date:", today)
 
         try:
             folder = 'media/images/'
