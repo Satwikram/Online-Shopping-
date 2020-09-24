@@ -12,8 +12,7 @@ urlpatterns = [
                 path('collection', views.collection, name = 'collection'),
                 path('sell', views.sell, name = 'sell'),
                 path('buy', views.buy, name = 'buy'),
-
-
+                path('search', views.search, name = 'search'),
 ]
 
 if settings.DEBUG:

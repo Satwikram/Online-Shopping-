@@ -9,6 +9,14 @@ class products:
     price : int
     des : str
 
+class CustProduct:
+
+    name : str
+    img : str
+    price : float
+    des : str
+    cat : str
+
 '''
 Created by : Satwik Ram K
 version : 1

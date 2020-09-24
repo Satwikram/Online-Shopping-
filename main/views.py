@@ -46,9 +46,16 @@ def products1():
     return prods
 
 def CustProducts():
-    products = SellProduct()
-    for product in products:
-        print(product.product_category)
+    products = SellProduct.objects.all()
+    return products
+
+def search(request):
+    if request.POST:
+        print(request.POST['query'])
+
+        return HttpResponseRedirect("/")
+    else:
+        return render(request,'index.html')
 
 def Main(request):
 
