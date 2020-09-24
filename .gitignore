@@ -9,6 +9,7 @@ templates
 media
 assets
 secret.py
+migrations
 rm -rf <repo_folder>/.git
 # Django #
 *.log
@@ -17,7 +18,6 @@ rm -rf <repo_folder>/.git
 __pycache__
 db.sqlite3
 media
-
 # Backup files # 
 *.bak 
 

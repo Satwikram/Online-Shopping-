@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from main.models import products, SellProducts
+from main.models import products, SellProduct
 
 
 def products1():
@@ -88,7 +88,7 @@ def sell(request):
             filepath = os.path.join(mediapath).format(name)
             print(filepath)
 
-            product = SellProducts()
+            product = SellProduct()
             product.price = price
             product.product_name = pname
             product.product_image = filepath
@@ -101,7 +101,6 @@ def sell(request):
             print("Error is:",e)
 
         return HttpResponseRedirect((reverse('main')))
-
 
     else:
         return render(request, 'sell.html')
