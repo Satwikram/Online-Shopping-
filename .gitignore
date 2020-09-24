@@ -9,6 +9,7 @@ templates
 media
 assets
 secret.py
+Products
 migrations
 rm -rf <repo_folder>/.git
 # Django #
@@ -19,7 +20,8 @@ __pycache__
 db.sqlite3
 media
 # Backup files # 
-*.bak 
+*.bak
+.idea
 
 # If you are using PyCharm # 
 .idea/**/workspace.xml 

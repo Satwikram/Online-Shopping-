@@ -14,6 +14,7 @@ from random import randint
 from django.template import Context
 from django.template.loader import render_to_string, get_template
 from django.core.mail import EmailMessage
+from random import randint
 
 
 
@@ -30,7 +31,7 @@ def register(request):
         ph = request.POST['ph']
         password1 = request.POST['psw-repeat']
 
-        if password1 != password :
+        if password1 != password:
             messages.info(request, "Password Mismatch!")
             return redirect("register")
 
@@ -49,6 +50,7 @@ def register(request):
                                                email = email, phone = ph)
 
             online_user.set_password(password)
+
 
             online_user.save()
             messages.info(request, "User Created")

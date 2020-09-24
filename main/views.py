@@ -74,7 +74,7 @@ def sell(request):
         print("Today's date:", today)
 
         try:
-            folder = 'media/images/'
+            folder = 'media/images/Products/'
             uploaded_image = request.FILES['prod']
             print("Name is:", uploaded_image.name)
 
@@ -82,10 +82,12 @@ def sell(request):
             # return Response({"error": "Choose file"}, status=status.HTTP_400_BAD_REQUEST)
             # for f in myfiles:
             filename = str(uploaded_image.name)
-            fs = FileSystemStorage(location=folder)  # defaults to DATASTORE
+            mediapath = folder + "{}/"
+            user_ph = request.user.phone
+            print("User Name:",user_ph)
+            filepath = os.path.join(mediapath).format(user_ph)
+            fs = FileSystemStorage(location=filepath)  # defaults to DATASTORE
             name = fs.save(uploaded_image.name, uploaded_image)
-            mediapath = folder + "{}"
-            filepath = os.path.join(mediapath).format(name)
             print(filepath)
 
             product = SellProduct()
