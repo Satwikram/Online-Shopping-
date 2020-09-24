@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from main.models import products, SellProduct
+from main.models import products, SellProduct, CustProduct
 
 
 def products1():
@@ -51,8 +51,11 @@ def CustProducts():
 
 def search(request):
     if request.POST:
-        print(request.POST['query'])
-
+        query = request.POST['query']
+        products = CustProducts()
+        for product in products:
+            if query == product.product_name:
+                pass
         return HttpResponseRedirect("/")
     else:
         return render(request,'index.html')
