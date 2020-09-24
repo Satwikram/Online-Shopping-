@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from main.models import products, selling
+from main.models import products, SellProducts
 
 
 def products1():
@@ -88,11 +88,13 @@ def sell(request):
             filepath = os.path.join(mediapath).format(name)
             print(filepath)
 
-            product = selling()
+            product = SellProducts()
             product.price = price
             product.product_name = pname
             product.product_image = filepath
             product.product_des = des
+            product.time = current_time
+            product.date = today
             product.save()
 
         except Exception as e:

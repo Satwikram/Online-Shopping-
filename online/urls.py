@@ -12,6 +12,4 @@ urlpatterns = [
                 path('Logout', views.Logout, name='Logout'),
                 path('forgot', views.forgot, name= 'forgot' ),
                 path('otp', views.otp, name='otp')
-
-
 ]
