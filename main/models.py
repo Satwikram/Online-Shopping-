@@ -18,5 +18,8 @@ class SellProduct(models.Model):
     product_name = models.CharField(max_length = 50)
     product_image = models.CharField(max_length = 100, null = True)
     product_des = models.TextField(max_length = 1000, blank = True)
+    product_category = models.CharField(max_length = 50, blank = True)
     date = models.CharField(max_length = 20)
     time = models.CharField(max_length = 20)
+
+

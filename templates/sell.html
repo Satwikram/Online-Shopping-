@@ -1,8 +1,12 @@
-<!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Sell Your Products</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="{% static 'css/sell.css' %}">
+
 </head>
 <body>
 
@@ -21,12 +25,24 @@
      <textarea name="des" rows="10" cols="30"></textarea>
     <br>
 
+     <p>Choose a file to upload Photo of your product.</p>
+
     <input type = 'file' name = 'prod'>
     <br>
 
-    <p>Choose a file to upload Photo of your product.</p>
     <br>
-    <button type = 'submit'>Sell</button>
+    <label>Choose a Category</label>
+     <select name="cat" id="cat">
+         <option selected="selected" disabled>Category</option>
+          <option value="Mobiles">Mobiles</option>
+          <option value="Laptops">Laptops</option>
+          <option value="Men Fashion">Men Fashion</option>
+          <option value="Women Fashion">Women Fashion</option>
+     </select>
+    <br>
+    <br>
+
+    <button type = 'submit' value="Select">Sell</button>
 
 </form>
 

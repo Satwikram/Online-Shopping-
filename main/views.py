@@ -45,6 +45,11 @@ def products1():
 
     return prods
 
+def CustProducts():
+    products = SellProduct()
+    for product in products:
+        print(product.product_category)
+
 def Main(request):
 
     prods = products1()
@@ -64,7 +69,9 @@ def sell(request):
         pname = request.POST['pname']
         price = request.POST['price']
         des = request.POST['des']
+        cat = request.POST['cat']
         print(des)
+        print(cat)
 
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
@@ -97,6 +104,7 @@ def sell(request):
             product.product_des = des
             product.time = current_time
             product.date = today
+            product.product_category = cat
             product.save()
 
         except Exception as e:
