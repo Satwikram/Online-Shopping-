@@ -41,6 +41,7 @@ class UserRegisteration(AbstractBaseUser):
     email = models.EmailField(verbose_name='email address',max_length=100, unique = True)
     password = models.CharField(max_length=150)
     phone = models.CharField(max_length=150,unique=True)
+    verified = models.BooleanField(default = False)
     USERNAME_FIELD = 'phone'
     REQUIRED_FIELDS = []
     objects = UserManager()
@@ -58,7 +59,7 @@ class UserRegisteration(AbstractBaseUser):
 
 class Otp(models.Model):
 
-    otp = models.IntegerField(max_length = 10)
+    otp = models.IntegerField()
 
 
 
