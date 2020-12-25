@@ -60,7 +60,7 @@ class UserRegisteration(AbstractBaseUser):
 class Otp(models.Model):
 
     otp = models.IntegerField()
-
+    email = models.EmailField(verbose_name = 'email address', max_length = 100)
 
 
 

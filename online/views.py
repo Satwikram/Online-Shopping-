@@ -1,5 +1,3 @@
-import http
-
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
@@ -15,6 +13,7 @@ from django.template import Context
 from django.template.loader import render_to_string, get_template
 from django.core.mail import EmailMessage
 from random import randint
+from .models import *
 
 
 
@@ -46,6 +45,15 @@ def register(request):
             return redirect('register')
 
         else:
+
+            otp = rnum()
+            print(otp)
+
+            email_otp = Otp()
+            email_otp.otp = otp
+            email_otp.email = email
+            email.otp.save()
+
             online_user = UserRegisteration.objects.create(first_name = fname, last_name = lname,
                                                email = email, phone = ph)
 
@@ -53,14 +61,14 @@ def register(request):
 
 
             online_user.save()
-            messages.info(request, "User Created")
+            #messages.info(request, "User Created")
             print("User Created")
             subject = 'Registeration Successfull!'
             message = "hello Welcome to Lazy Shopping!\n " \
                       "Hope your doing great.\n" \
                       " Products you can sell:\n" \
                       "1.Mobiles\n" \
-                      "2. Laptops\n" \
+                      "2.Laptops\n" \
                       "for any query you can contact lazy@support.ac.in\n" \
                       "Have a great day!"
 
@@ -68,7 +76,24 @@ def register(request):
             recepient = email
             print("Email is:",recepient)
             send_mail(subject, message, EMAIL_HOST_USER, [recepient], fail_silently = False)
-            return redirect('register')
+
+            subject1 = "OTP Verification!"
+            to = [email]
+            from_email = EMAIL_HOST_USER
+
+            ctx = {
+                'user': fname,
+                'otp': otp
+            }
+
+            message1 = render_to_string('otp.html', ctx)
+
+            msg = EmailMessage(subject1, message1, to=to, from_email=from_email)
+
+            msg.content_subtype = 'html'
+            msg.send()
+
+            return redirect('otp')
 
     else:
         return render(request, 'register.html')
@@ -119,28 +144,15 @@ def forgot(request):
     else:
         return render(request, 'forgot.html')
 
+def rnum():
+    return randint(1000,9999)
+
 def otp(request):
 
     if request.method == 'POST':
-        email = request.POST['email']
-        fname = request.POST['fname']
-        otp1 =  request.POST['otp']
-        # otp = request.POST['otp']
-        sub = "Email Verification"
-        ctx = {'user': fname, 'otp': otp1}
-
-        message = get_template('otp.html').render(ctx)
-
-        msg = EmailMessage(sub, message, EMAIL_HOST_USER, [email])
-
-        msg.content_subtype = "html"  # Main content is now text/html
-        msg.send()
-
-        messages.info(request, "otp successfully sent")
-
-        return redirect('register')
-
-
+        pass
+    else:
+        return render(request, 'otp-verification.html')
 
 
 
