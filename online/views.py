@@ -150,7 +150,22 @@ def rnum():
 def otp(request):
 
     if request.method == 'POST':
-        pass
+
+        email = request.POST['email']
+        otp = request.POST['otp']
+
+        otp1 = Otp.objects.filter(email = 'email').values('otp')
+        print(otp1)
+
+        if otp != otp1:
+            messages.info(request, "Invalid Otp for the Email")
+
+        else:
+            UserRegisteration.objects.filter(email = 'email').update(verified = True)
+            Otp.objects.filter(email = 'email').delete()
+
+            return redirect("main")
+
     else:
         return render(request, 'otp-verification.html')
 
