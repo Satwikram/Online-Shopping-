@@ -56,7 +56,9 @@ class UserRegisteration(AbstractBaseUser):
         return True
 
 
+class Otp(models.Model):
 
+    otp = models.IntegerField(max_length = 10)
 
 
 
