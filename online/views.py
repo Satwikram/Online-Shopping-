@@ -47,12 +47,12 @@ def register(request):
         else:
 
             otp = rnum()
-            print(otp)
+            print(otp, type(otp))
 
             email_otp = Otp()
             email_otp.otp = otp
             email_otp.email = email
-            email.otp.save()
+            email_otp.save()
 
             online_user = UserRegisteration.objects.create(first_name = fname, last_name = lname,
                                                email = email, phone = ph)
@@ -153,16 +153,30 @@ def otp(request):
 
         email = request.POST['email']
         otp = request.POST['otp']
+        otp = int(otp)
+        print(otp)
 
-        otp1 = Otp.objects.filter(email = 'email').values('otp')
-        print(otp1)
+        otp1 = Otp.objects.get(email = email).otp
 
         if otp != otp1:
             messages.info(request, "Invalid Otp for the Email")
+            return redirect("otp")
 
         else:
-            UserRegisteration.objects.filter(email = 'email').update(verified = True)
-            Otp.objects.filter(email = 'email').delete()
+
+            UserRegisteration.objects.filter(email = email).update(verified = True)
+            print("Updated")
+            Otp.objects.filter(email = email).delete()
+
+            name = UserRegisteration.objects.get(email = email).first_name
+
+            subject = "Email Verification Successfull!"
+            message = "Dear "+name+" Your email has be verified!\n\n"\
+                      "Happy Shopping!"
+
+            recepient = email
+            send_mail(subject, message, EMAIL_HOST_USER, [recepient], fail_silently = False)
+
 
             return redirect("main")
 
