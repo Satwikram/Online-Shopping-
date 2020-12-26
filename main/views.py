@@ -49,16 +49,12 @@ def CustProducts():
     products = SellProduct.objects.all()
     return products
 
-def search(request):
-    if request.POST:
+def SearchListAPIView(ListApI):
+    if request.method == 'POST':
         query = request.POST['query']
-        products = CustProducts()
-        for product in products:
-            if query == product.product_name:
-                pass
-        return HttpResponseRedirect("/")
-    else:
-        return render(request,'index.html')
+
+
+
 
 def Main(request):
 
