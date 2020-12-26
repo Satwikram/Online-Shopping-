@@ -5,6 +5,7 @@ from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.generics import ListAPIView
 
 from main.models import products, SellProduct, CustProduct
@@ -52,12 +53,9 @@ def CustProducts():
 
 class SearchListAPIView(ListAPIView):
 
-    def post(self, request):
-        query = request.POST['query']
-        queryset = SellProduct.objects.all()
-
-
-
+    queryset = SellProduct.objects.all()
+    filter_backends = (SearchFilter, OrderingFilter)
+    search_fields = ('product_name', 'product_des', 'product_category')
 
 
 def Main(request):
