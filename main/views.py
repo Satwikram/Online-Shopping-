@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.generics import ListAPIView
+from .serializers import *
 
 from main.models import products, SellProduct, CustProduct
 
@@ -54,6 +55,7 @@ def CustProducts():
 class SearchListAPIView(ListAPIView):
 
     queryset = SellProduct.objects.all()
+    serializer_class = SellSerializer
     filter_backends = (SearchFilter, OrderingFilter)
     search_fields = ('product_name', 'product_des', 'product_category')
 
