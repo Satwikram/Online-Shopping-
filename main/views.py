@@ -5,6 +5,7 @@ from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from rest_framework.generics import ListAPIView
 
 from main.models import products, SellProduct, CustProduct
 
@@ -49,9 +50,12 @@ def CustProducts():
     products = SellProduct.objects.all()
     return products
 
-def SearchListAPIView(ListApI):
-    if request.method == 'POST':
+class SearchListAPIView(ListAPIView):
+
+    def post(self, request):
         query = request.POST['query']
+        queryset = SellProduct.objects.all()
+
 
 
 

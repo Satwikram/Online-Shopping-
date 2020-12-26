@@ -93,6 +93,14 @@ DATABASES = {
     }
 }
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+    'DEFAULT_PAGINATION_CLASSES': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 5,
+
+}
 AUTH_USER_MODEL = 'online.UserRegisteration'
 
 
