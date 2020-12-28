@@ -103,6 +103,11 @@ def sell(request):
             print("User Name:",user_ph)
             filepath = os.path.join(mediapath).format(user_ph)
 
+            fs = FileSystemStorage(location=filepath)  # defaults to DATASTORE
+            name = fs.save(uploaded_image.name, uploaded_image)
+            filepath = filepath+name
+            print(filepath)
+
             product = SellProduct()
             product.price = price
             product.product_name = pname
@@ -113,9 +118,6 @@ def sell(request):
             product.product_category = cat
             product.save()
 
-            fs = FileSystemStorage(location=filepath)  # defaults to DATASTORE
-            name = fs.save(uploaded_image.name, uploaded_image)
-            print(filepath)
 
 
         except Exception as e:
