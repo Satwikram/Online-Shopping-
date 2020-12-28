@@ -91,6 +91,8 @@ def sell(request):
         print("Today's date:", today)
 
         try:
+
+
             folder = 'media/images/Products/'
             uploaded_image = request.FILES['prod']
             print("Name is:", uploaded_image.name)
@@ -103,9 +105,6 @@ def sell(request):
             user_ph = request.user.phone
             print("User Name:",user_ph)
             filepath = os.path.join(mediapath).format(user_ph)
-            fs = FileSystemStorage(location=filepath)  # defaults to DATASTORE
-            name = fs.save(uploaded_image.name, uploaded_image)
-            print(filepath)
 
             product = SellProduct()
             product.price = price
@@ -116,6 +115,11 @@ def sell(request):
             product.date = today
             product.product_category = cat
             product.save()
+
+            fs = FileSystemStorage(location=filepath)  # defaults to DATASTORE
+            name = fs.save(uploaded_image.name, uploaded_image)
+            print(filepath)
+
 
         except Exception as e:
             print("Error is:",e)
