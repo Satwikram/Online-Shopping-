@@ -26,6 +26,7 @@ Created by : Satwik Ram K
 version : 1
 '''
 class SellProduct(models.Model):
+
     slug = models.SlugField(unique = True, max_length=250, null=True, blank=True, editable = False)
     price = models.FloatField(max_length = 10)
     product_name = models.CharField(max_length = 50)

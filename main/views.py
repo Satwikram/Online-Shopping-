@@ -7,6 +7,10 @@ from django.shortcuts import render
 from django.urls import reverse
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.generics import ListAPIView
+from rest_framework.views import APIView
+from rest_framework import generics
+import requests
+
 from .serializers import *
 
 from main.models import products, SellProduct, CustProduct
@@ -51,13 +55,6 @@ def products1():
 def CustProducts():
     products = SellProduct.objects.all()
     return products
-
-class SearchListAPIView(ListAPIView):
-
-    queryset = SellProduct.objects.all()
-    serializer_class = SellSerializer
-    filter_backends = (SearchFilter, OrderingFilter)
-    search_fields = ('product_name', 'product_des', 'product_category')
 
 
 def Main(request):
@@ -128,6 +125,28 @@ def sell(request):
 
     else:
         return render(request, 'sell.html')
+
+class ProductsAPIView(generics.ListCreateAPIView):
+
+    queryset = SellProduct.objects.all()
+    serializer_class = SellSerializer
+
+class SearchListAPIView(ListAPIView):
+
+    queryset = SellProduct.objects.all()
+    serializer_class = SellSerializer
+    filter_backends = (SearchFilter, OrderingFilter)
+    search_fields = ('product_name', 'product_des', 'product_category')
+
+def result(request):
+
+    query = "puma shoes"
+    query = "?search="+query
+    url = "http://127.0.0.1:8000/search/"+query
+    response = requests.get(url)
+    result = response.json()
+    print(result[0])
+    return render(request, "test.html", {'result': result[0]})
 
 def buy(request):
     prods = products1()
