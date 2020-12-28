@@ -1,6 +1,10 @@
 from django.db import models
 
 # Create your models here.
+from django.db.models.signals import pre_save
+
+from shopping.utils import unique_slug_generator
+
 
 class products:
 
@@ -22,7 +26,7 @@ Created by : Satwik Ram K
 version : 1
 '''
 class SellProduct(models.Model):
-    slug = models
+    slug = models.SlugField(unique = True, max_length=250, null=True, blank=True, editable = False)
     price = models.FloatField(max_length = 10)
     product_name = models.CharField(max_length = 50)
     product_image = models.CharField(max_length = 100, null = True)
@@ -30,5 +34,14 @@ class SellProduct(models.Model):
     product_category = models.CharField(max_length = 50, blank = True)
     date = models.CharField(max_length = 20)
     time = models.CharField(max_length = 20)
+
+    def __str__(self):
+        return self.product_name
+
+def rl_pre_save_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = unique_slug_generator(instance)
+
+pre_save.connect(rl_pre_save_receiver, sender = SellProduct)
 
 

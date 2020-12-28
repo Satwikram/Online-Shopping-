@@ -19,9 +19,9 @@ method: generates random integers for slug
 """
 def random_integer_generator():
     random_num = random.randint(1, 100000000000000)
-    print("Random Number Generated for slugs:", random_num)
-    my_num = 247902799
-    return my_num
+    #print("Random Number Generated for slugs:", random_num)
+    #my_num = 247902799
+    return random_num
 
 
 """
