@@ -12,7 +12,7 @@ urlpatterns = [
                 path('collection', views.collection, name = 'collection'),
                 path('sell', views.sell, name = 'sell'),
                 path('buy', views.buy, name = 'buy'),
-                path('result', views.result, name = "result"),
+                path('search', views.search, name = "search"),
 
                 # Django RestAPI URLS
                 path('search/', SearchListAPIView.as_view(), name = "search"),

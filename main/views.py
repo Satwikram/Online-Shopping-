@@ -1,6 +1,8 @@
 import os
 from datetime import datetime
 from datetime import date
+
+from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -140,15 +142,19 @@ class SearchListAPIView(ListAPIView):
     filter_backends = (SearchFilter, OrderingFilter)
     search_fields = ('product_name', 'product_des', 'product_category')
 
-def result(request):
+def search(request):
 
-    query = "puma shoes"
-    query = "?search="+query
-    url = "http://127.0.0.1:8000/search/"+query
-    response = requests.get(url)
-    result = response.json()
-    print(result[0])
-    return render(request, "test.html", {'result': result[0]})
+    if request.method == 'POST':
+        query = request.POST['query']
+        query = "?search="+query
+        url = "http://127.0.0.1:8000/search/"+query
+        response = requests.get(url)
+        results = response.json()
+        if results == []:
+            messages.info(request,"No Results Found")
+            return render(request, 'notfound.html')
+        print(results)
+        return render(request, "results.html", {'results': results})
 
 def buy(request):
     prods = products1()
