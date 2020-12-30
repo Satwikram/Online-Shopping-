@@ -17,7 +17,27 @@ from .serializers import *
 
 from main.models import products, SellProduct, CustProduct
 
+"""
+Author: Satwik Ram K
+Rest API
+"""
 
+class ProductsAPIView(generics.ListCreateAPIView):
+
+    queryset = SellProduct.objects.all()
+    serializer_class = SellSerializer
+
+class SearchListAPIView(ListAPIView):
+
+    queryset = SellProduct.objects.all()
+    serializer_class = SellSerializer
+    filter_backends = (SearchFilter, OrderingFilter)
+    search_fields = ('product_name', 'product_des', 'product_category')
+
+"""
+Author: Satwik Ram K
+Django API
+"""
 def products1():
     prod1 = products()
     prod1.price = 1000
@@ -129,18 +149,6 @@ def sell(request):
 
     else:
         return render(request, 'sell.html')
-
-class ProductsAPIView(generics.ListCreateAPIView):
-
-    queryset = SellProduct.objects.all()
-    serializer_class = SellSerializer
-
-class SearchListAPIView(ListAPIView):
-
-    queryset = SellProduct.objects.all()
-    serializer_class = SellSerializer
-    filter_backends = (SearchFilter, OrderingFilter)
-    search_fields = ('product_name', 'product_des', 'product_category')
 
 def search(request):
 
