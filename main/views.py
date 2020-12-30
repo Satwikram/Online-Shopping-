@@ -4,13 +4,14 @@ from datetime import date
 
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.generics import ListAPIView
+from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import generics
+from rest_framework import generics, status
 import requests
 
 from .serializers import *
@@ -26,6 +27,29 @@ class ProductsAPIView(generics.ListCreateAPIView):
 
     queryset = SellProduct.objects.all()
     serializer_class = SellSerializer
+
+class ProductDetailsAPIView(APIView):
+
+    def get_object(self, slug):
+        try:
+            product = SellProduct.objects.filter(slug = slug)
+            print(product)
+            return product
+
+        except SellProduct.DoesNotExist:
+            return HttpResponse(status = status.HTTP_404_NOT_FOUND)
+
+
+    def get(self, request, slug):
+
+        try:
+            product = self.get_object(slug)
+            print("Am in Get method")
+            serializer = SellSerializer(product)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except:
+            return HttpResponse(status = status.HTTP_404_NOT_FOUND)
+
 
 class SearchListAPIView(ListAPIView):
 
