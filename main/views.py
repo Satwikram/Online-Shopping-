@@ -32,8 +32,10 @@ class ProductDetailsAPIView(APIView):
 
     def get_object(self, slug):
         try:
-            product = SellProduct.objects.filter(slug = slug)
-            print(product)
+            id = SellProduct.objects.filter(slug = slug).values('id')[0]['id']
+            print(id)
+            product = SellProduct.objects.get(id = id)
+            print("product is",product)
             return product
 
         except SellProduct.DoesNotExist:
@@ -173,6 +175,10 @@ def sell(request):
 
     else:
         return render(request, 'sell.html')
+
+def details(request):
+    pass
+
 
 def search(request):
 

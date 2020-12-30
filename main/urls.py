@@ -17,6 +17,7 @@ urlpatterns = [
                 # Django RestAPI URLS
                 path('search/', SearchListAPIView.as_view(), name = "search"),
                 path('products/', ProductsAPIView.as_view(), name = "products"),
+                path('details/<str:slug>', ProductDetailsAPIView.as_view(), name = "ProductDetails"),
 
 
 ]
