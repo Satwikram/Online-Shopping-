@@ -34,7 +34,7 @@ class ProductDetailsAPIView(APIView):
         try:
             id = SellProduct.objects.filter(slug = slug).values('id')[0]['id']
             print(id)
-            product = SellProduct.objects.get(id = id)
+            product = SellProduct.objects.filter(id = id).values()
             print("product is",product)
             return product
 
@@ -45,10 +45,20 @@ class ProductDetailsAPIView(APIView):
     def get(self, request, slug):
 
         try:
-            product = self.get_object(slug)
+            product = self.get_object(slug)[0]
             print("Am in Get method")
-            serializer = SellSerializer(product)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            details = [{
+                        "price": product["price"],
+                        "product_name": product["product_name"],
+                        "product_image": product["product_image"],
+                        "product_des": product["product_des"]
+                       }]
+            print(details)
+            #serializer = SellSerializer(product)
+            #print(serializer.field)
+            #return Response(serializer.data, status=status.HTTP_200_OK)
+            return render(request, "results.html", {'results': details})
+
         except:
             return HttpResponse(status = status.HTTP_404_NOT_FOUND)
 
