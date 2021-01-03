@@ -1,7 +1,6 @@
 import os
 from datetime import datetime
 from datetime import date
-
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponseRedirect, HttpResponse
@@ -13,9 +12,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import generics, status
 import requests
-
 from .serializers import *
-
 from main.models import products, SellProduct, CustProduct
 
 """
@@ -32,7 +29,7 @@ class ProductDetailsAPIView(APIView):
 
     def get_object(self, slug):
         try:
-            id = SellProduct.objects.filter(slug = slug).values('id')[0]['id']
+            id = SellProduct.objects.all().filter(slug = slug).values('id')[0]['id']
             print(id)
             product = SellProduct.objects.filter(id = id).values()
             print("product is",product)
@@ -45,21 +42,16 @@ class ProductDetailsAPIView(APIView):
     def get(self, request, slug):
 
         try:
-            product = self.get_object(slug)[0]
-            print("Am in Get method")
-            details = [{
-                        "price": product["price"],
-                        "product_name": product["product_name"],
-                        "product_image": product["product_image"],
-                        "product_des": product["product_des"]
-                       }]
-            print(details)
-            #serializer = SellSerializer(product)
-            #print(serializer.field)
-            #return Response(serializer.data, status=status.HTTP_200_OK)
-            return render(request, "results.html", {'results': details})
+            product = self.get_object(slug)
+            print("Am in Get method", product)
 
-        except:
+            serializer = SellSerializer(product, many = True)
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+            #return render(request, "results.html", {'results': details})
+
+        except Exception as e:
+            print("Error is",e)
             return HttpResponse(status = status.HTTP_404_NOT_FOUND)
 
 
@@ -75,6 +67,7 @@ Author: Satwik Ram K
 Django API
 """
 def products1():
+
     prod1 = products()
     prod1.price = 1000
     prod1.img = 'shoe_1.jpg'
@@ -105,15 +98,14 @@ def products1():
     canon.name = 'Canon Ultimate'
     canon.des = 'Camera with 4K recording and ultimate graphics'
 
-
     prods = [prod1, top, polo, coarter, canon, prod1, top, polo, coarter, canon,prod1, top, polo, coarter, canon,]
 
     return prods
 
 def CustProducts():
+
     products = SellProduct.objects.all()
     return products
-
 
 def Main(request):
 
@@ -176,8 +168,6 @@ def sell(request):
             product.product_category = cat
             product.save()
 
-
-
         except Exception as e:
             print("Error is:",e)
 
@@ -201,9 +191,16 @@ def search(request):
         if results == []:
             messages.info(request,"No Results Found")
             return render(request, 'notfound.html')
-        print(results)
         return render(request, "results.html", {'results': results})
 
-def buy(request):
-    prods = products1()
-    return render(request, 'description.html', {'prods': prods})
+
+def buy(request, slug):
+   slug = slug
+   url = "http://127.0.0.1:8000/details/"+slug
+
+   response = requests.get(url)
+   results = response.json()
+   if results == []:
+    messages.info(request,"This item is out of Stock")
+    return render(request, 'notfound.html')
+   return render(request, "description.html", {'results': results})
