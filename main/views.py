@@ -200,6 +200,7 @@ def buy(request, slug):
 
    response = requests.get(url)
    results = response.json()
+   print("Results",results)
    if results == []:
     messages.info(request,"This item is out of Stock")
     return render(request, 'notfound.html')
