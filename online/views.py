@@ -171,7 +171,7 @@ def otp(request):
             name = UserRegisteration.objects.get(email = email).first_name
 
             subject = "Email Verification Successfull!"
-            message = "Dear "+name+" Your email has be verified!\n\n"\
+            message = "Dear "+name+" Your email has been verified!\n\n"\
                       "Happy Shopping!"
 
             recepient = email

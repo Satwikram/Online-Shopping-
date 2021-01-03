@@ -32,12 +32,15 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    #'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'material',
+    'material.admin',
+    'material.admin.default',
     'rest_framework',
     'online.apps.OnlineConfig',
     'main.apps.MainConfig',
@@ -165,3 +168,18 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = mail # Your Gmail Account
 EMAIL_HOST_PASSWORD = gpassword # Gmail password
+
+"""
+Admin Page Configuration
+"""
+MATERIAL_ADMIN_SITE = {
+    'HEADER':  ('Lazy Shopping!'),  # Admin site header
+    'TITLE':  ('Welcome to the page'),  # Admin site title
+    #'FAVICON':  'path/to/favicon',   # Admin site favicon (path to static should be specified)
+    'MAIN_BG_COLOR':  'red',  # Admin site main color, css color should be specified
+     'SHOW_THEMES':  True,  #  Show default admin themes button
+    'TRAY_REVERSE': True,  # Hide object-tools and additional-submit-line by default
+    'NAVBAR_REVERSE': True,  # Hide side navbar by default
+    'SHOW_COUNTS': True, # Show instances counts for each model
+
+}
