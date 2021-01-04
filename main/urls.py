@@ -14,6 +14,7 @@ urlpatterns = [
                 path('buy/<str:slug>', views.buy, name = 'buy'),
                 path('search', views.search, name = "search"),
                 path('cart', views.cart, name = 'cart'),
+                path('checkout', views.checkout, name = 'checkout'),
 
                 # Django RestAPI URLS
                 path('search/', SearchListAPIView.as_view(), name = "search"),
