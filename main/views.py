@@ -205,3 +205,7 @@ def buy(request, slug):
     messages.info(request,"This item is out of Stock")
     return render(request, 'notfound.html')
    return render(request, "description.html", {'results': results})
+
+
+def cart(request):
+    return render(request, "cart.html")
