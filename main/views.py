@@ -65,9 +65,8 @@ class SearchListAPIView(ListAPIView):
 class CartAPIView(APIView):
 
     def get(self, request):
-
         product = Cart.objects.all().order_by('-time')
-        serializer = CartSerializer(product, many = True)
+        serializer = CartSerializer(product,  many = True)
         return Response(serializer.data)
 
     def post(self, request):
