@@ -3,7 +3,7 @@ from datetime import datetime
 from datetime import date
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from rest_framework.filters import SearchFilter, OrderingFilter
@@ -43,8 +43,6 @@ class ProductDetailsAPIView(APIView):
 
         try:
             product = self.get_object(slug)
-            print("Am in Get method", product)
-
             serializer = SellSerializer(product, many = True)
 
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -71,7 +69,13 @@ class CartAPIView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        pass
+
+        print("Am in POST CART API", request.data)
+        serializer = CartSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
     def delete(self, request):
@@ -225,11 +229,17 @@ def cart(request, slug):
     slug = slug
     url = "http://127.0.0.1:8000/details/"+slug
     response = requests.get(url)
-    results = response.json()
-    print("Results", results)
-    if results == []:
+    result = response.json()
+    print(result)
+    if result == []:
         messages.info(request, "This item is out of Stock")
-        return HttpResponseRedirect((reverse('search')))
+        return HttpResponseRedirect((reverse('main')))
+
+    url1 = "http://127.0.0.1:8000/add-to-cart"
+    requests.post(url1, data = result)
+
+
+
 
 
 
