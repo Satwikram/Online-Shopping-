@@ -17,3 +17,18 @@ class SellSerializer(serializers.ModelSerializer):
             'date',
             'time',
         ]
+
+class CartSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cart
+
+        fields = [
+            'product'
+            'price',
+            'product_name',
+            'product_image',
+            'product_des',
+            'product_category',
+            'date',
+            'time',
+        ]
