@@ -46,8 +46,8 @@ def rl_pre_save_receiver(sender, instance, *args, **kwargs):
 pre_save.connect(rl_pre_save_receiver, sender = SellProduct)
 
 
-class cart(models.Model):
-    product_id = models.ForeignKey(SellProduct, related_name = "Add_to_Cart",on_delete=models.CASCADE)
+class Cart(models.Model):
+    product = models.ForeignKey(SellProduct, related_name = "Add_to_Cart",on_delete=models.CASCADE)
     price = models.FloatField(max_length = 10)
     product_name = models.CharField(max_length = 50)
     product_image = models.CharField(max_length = 100, null = True)
