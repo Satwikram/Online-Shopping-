@@ -62,6 +62,19 @@ class SearchListAPIView(ListAPIView):
     filter_backends = (SearchFilter, OrderingFilter)
     search_fields = ('product_name', 'product_des', 'product_category')
 
+class CartAPIView(APIView):
+
+    def get(self, request):
+
+        product = Cart.objects.all().order_by('-time')
+        serializer = CartSerializer(product, many = True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        pass
+
+    def delete(self, request):
+        pass
 """
 Author: Satwik Ram K
 Django API
@@ -138,7 +151,6 @@ def sell(request):
         print("Today's date:", today)
 
         try:
-
 
             folder = 'media/images/Products/'
             uploaded_image = request.FILES['prod']
