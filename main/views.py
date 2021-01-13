@@ -65,12 +65,14 @@ class SearchListAPIView(ListAPIView):
 class CartAPIView(APIView):
 
     def get(self, request):
+
         product = Cart.objects.all().order_by('-time')
         serializer = CartSerializer(product,  many = True)
         return Response(serializer.data)
 
     def post(self, request):
         pass
+
 
     def delete(self, request):
         pass
@@ -218,8 +220,19 @@ def buy(request, slug):
    return render(request, "description.html", {'results': results})
 
 
-def cart(request):
-    return render(request, "cart.html")
+def cart(request, slug):
+
+    slug = slug
+    url = "http://127.0.0.1:8000/details/"+slug
+    response = requests.get(url)
+    results = response.json()
+    print("Results", results)
+    if results == []:
+        messages.info(request, "This item is out of Stock")
+        return HttpResponseRedirect((reverse('search')))
+
+
+
 
 def checkout(request):
     return render(request, "checkout.html")
