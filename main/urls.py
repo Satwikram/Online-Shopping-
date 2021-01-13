@@ -20,7 +20,7 @@ urlpatterns = [
                 path('search/', SearchListAPIView.as_view(), name = "search"),
                 path('products/', ProductsAPIView.as_view(), name = "products"),
                 path('details/<str:slug>', ProductDetailsAPIView.as_view(), name = "ProductDetails"),
-
+                path('cart', CartAPIView.as_view(), name="cart"),
 
 ]
 
