@@ -182,8 +182,8 @@ def details(request):
 
 def search(request):
 
-    if request.method == 'POST':
-        query = request.POST['query']
+    if request.method == 'GET':
+        query = request.GET.get('query')
         query = "?search="+query
         url = "http://127.0.0.1:8000/search/"+query
         response = requests.get(url)
