@@ -230,13 +230,17 @@ def cart(request, slug):
     response = requests.get(url)
     result = response.json()
     result = result[0]
+    user = request.user
+    user = str(user)
+    result['user'] = user
     print("Result is",result)
     if result == []:
         messages.info(request, "This item is out of Stock")
         return HttpResponseRedirect((reverse('main')))
 
     url1 = "http://127.0.0.1:8000/add-to-cart"
-    requests.post(url1, data = result)
+    #requests.post(url1, data = result)
+    print("User is", request.user)
 
     messages.info(request, "Sucessfully Added to Cart")
     return HttpResponseRedirect((reverse('main')))
