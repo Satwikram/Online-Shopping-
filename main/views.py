@@ -239,7 +239,7 @@ def cart(request, slug):
         return HttpResponseRedirect((reverse('main')))
 
     url1 = "http://127.0.0.1:8000/add-to-cart"
-    #requests.post(url1, data = result)
+    requests.post(url1, data = result)
     print("User is", request.user)
 
     messages.info(request, "Sucessfully Added to Cart")
