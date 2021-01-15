@@ -72,15 +72,16 @@ class CartAPIView(APIView):
 
         if serializer.is_valid():
             slug = serializer.validated_data['slug']
-            quantity = serializer.validated_data['quantity']
             price = serializer.validated_data['price']
-
+            print(price)
 
             if AddCart.objects.filter(slug = slug).exists():
-                print(type(slug))
+                quantity = AddCart.objects.filter(slug = slug).values('quantity')[0]['quantity']
+                print(quantity)
                 quantity = quantity + 1
                 price = quantity * price
                 AddCart.objects.filter(slug = slug).update(quantity = quantity, price = price)
+                print("Updated Successfully")
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             else:
                 serializer.save()
