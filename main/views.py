@@ -223,7 +223,7 @@ def buy(request, slug):
    return render(request, "description.html", {'results': results})
 
 
-def cart(request, slug):
+def addcart(request, slug):
 
     slug = slug
     url = "http://127.0.0.1:8000/details/"+slug
