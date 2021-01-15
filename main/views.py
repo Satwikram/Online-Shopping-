@@ -30,9 +30,7 @@ class ProductDetailsAPIView(APIView):
     def get_object(self, slug):
         try:
             id = SellProduct.objects.all().filter(slug = slug).values('id')[0]['id']
-            print(id)
             product = SellProduct.objects.filter(id = id).values()
-            print("product is",product)
             return product
 
         except SellProduct.DoesNotExist:
@@ -71,10 +69,24 @@ class CartAPIView(APIView):
     def post(self, request):
 
         serializer = CartSerializer(data = request.data)
+
         if serializer.is_valid():
-            print("Data is",serializer.data)
-            #serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            slug = serializer.validated_data['slug']
+            quantity = serializer.validated_data['quantity']
+            price = serializer.validated_data['price']
+
+            print(quantity)
+            print(price)
+
+            if AddCart.objects.filter(slug = slug).exists():
+                print(type(slug))
+                quantity = quantity + 1
+                price = quantity * price
+                AddCart.objects.filter(slug = slug).update(quantity = quantity, price = price)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            else:
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request):
@@ -234,7 +246,6 @@ def addcart(request, slug):
     user = str(user)
     result['user'] = user
     result['quantity'] = 1
-    print("Result is",result)
     if result == []:
         messages.info(request, "This item is out of Stock")
         return HttpResponseRedirect((reverse('main')))
