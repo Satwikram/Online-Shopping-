@@ -48,7 +48,7 @@ pre_save.connect(rl_pre_save_receiver, sender = SellProduct)
 
 class AddCart(models.Model):
     user = models.CharField(max_length = 50)
-    slug = models.CharField(max_length = 150)
+    slug = models.CharField(max_length = 150, unique = True)
     quantity = models.IntegerField(max_length = 10, default = 1)
     price = models.FloatField(max_length = 10)
     product_name = models.CharField(max_length = 50)
