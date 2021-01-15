@@ -4,7 +4,7 @@ from datetime import date
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.generics import ListAPIView
@@ -64,7 +64,7 @@ class CartAPIView(APIView):
 
     def get(self, request):
 
-        product = Cart.objects.all().order_by('-time')
+        product = AddCart.objects.all().order_by('-time')
         serializer = CartSerializer(product,  many = True)
         return Response(serializer.data)
 
@@ -76,7 +76,6 @@ class CartAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
     def delete(self, request):
         pass
@@ -230,7 +229,8 @@ def cart(request, slug):
     url = "http://127.0.0.1:8000/details/"+slug
     response = requests.get(url)
     result = response.json()
-    print(result)
+    result = result[0]
+    print("Result is",result)
     if result == []:
         messages.info(request, "This item is out of Stock")
         return HttpResponseRedirect((reverse('main')))
@@ -238,8 +238,8 @@ def cart(request, slug):
     url1 = "http://127.0.0.1:8000/add-to-cart"
     requests.post(url1, data = result)
 
-
-
+    messages.info(request, "Sucessfully Added to Cart")
+    return HttpResponseRedirect((reverse('main')))
 
 def checkout(request):
     return render(request, "checkout.html")
