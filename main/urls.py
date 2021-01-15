@@ -13,7 +13,7 @@ urlpatterns = [
                 path('sell', views.sell, name = 'sell'),
                 path('buy/<str:slug>', views.buy, name = 'buy'),
                 path('search', views.search, name = "search"),
-                path('cart/<str:slug>', views.cart, name = 'cart'),
+                path('addcart/<str:slug>', views.addcart, name = 'addcart'),
                 path('checkout', views.checkout, name = 'checkout'),
 
                 # Django RestAPI URLS
