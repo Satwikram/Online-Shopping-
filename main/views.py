@@ -75,8 +75,6 @@ class CartAPIView(APIView):
             quantity = serializer.validated_data['quantity']
             price = serializer.validated_data['price']
 
-            print(quantity)
-            print(price)
 
             if AddCart.objects.filter(slug = slug).exists():
                 print(type(slug))
