@@ -241,8 +241,5 @@ def cart(request, slug):
 
 
 
-
-
-
 def checkout(request):
     return render(request, "checkout.html")
