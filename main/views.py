@@ -245,5 +245,8 @@ def addcart(request, slug):
     messages.info(request, "Sucessfully Added to Cart")
     return HttpResponseRedirect((reverse('main')))
 
+def cart(request):
+    return render(request, "cart.html")
+
 def checkout(request):
     return render(request, "checkout.html")
