@@ -70,10 +70,10 @@ class CartAPIView(APIView):
 
     def post(self, request):
 
-        print("Am in POST CART API", request.data)
         serializer = CartSerializer(data = request.data)
         if serializer.is_valid():
-            serializer.save()
+            print("Data is",serializer.data)
+            #serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -233,6 +233,7 @@ def addcart(request, slug):
     user = request.user
     user = str(user)
     result['user'] = user
+    result['quantity'] = 1
     print("Result is",result)
     if result == []:
         messages.info(request, "This item is out of Stock")
