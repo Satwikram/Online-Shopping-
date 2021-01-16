@@ -28,6 +28,7 @@ class CartSerializer(serializers.ModelSerializer):
             'slug',
             'quantity',
             'price',
+            'updated_price',
             'product_name',
             'product_image',
             'product_des',
