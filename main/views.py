@@ -252,6 +252,8 @@ def addcart(request, slug):
     user = str(user)
     result['user'] = user
     result['quantity'] = 1
+    result['updated_price'] = result['price'] * result['quantity']
+
     if result == []:
         messages.info(request, "This item is out of Stock")
         return HttpResponseRedirect((reverse('main')))
@@ -265,8 +267,17 @@ def addcart(request, slug):
 
 def cart(request, user):
 
-    url = 'http://127.0.0.1:8000/add-to-cart/'
-    return render(request, "cart.html")
+    if user == 'AnonymousUser':
+        return HttpResponse("Please Login to View the Cart.")
+    else:
+        url = 'http://127.0.0.1:8000/add-to-cart/'+user
+        response = requests.get(url = url)
+        results = response.json()
+        print("obtained Result is",results)
+        total = 0
+        for result in results:
+            total += result['price']
+        return render(request, "cart.html", {"results": results, "total": total})
 
 def checkout(request):
     return render(request, "checkout.html")
