@@ -80,16 +80,16 @@ class CartAPIView(APIView):
         if serializer.is_valid():
             slug = serializer.validated_data['slug']
             price = serializer.validated_data['price']
-            print(price)
 
-            if AddCart.objects.filter(slug = slug).exists():
-                quantity = AddCart.objects.filter(slug = slug).values('quantity')[0]['quantity']
-                print(quantity)
-                quantity = quantity + 1
-                updated_price = quantity * price
-                AddCart.objects.filter(slug = slug).update(quantity = quantity, updated_price = updated_price)
-                print("Updated Successfully")
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            if AddCart.objects.filter(user = user).exists():
+                if AddCart.objects.filter(slug = slug).exists():
+                    quantity = AddCart.objects.filter(user = user, slug = slug).values('quantity')[0]['quantity']
+                    print(quantity)
+                    quantity = quantity + 1
+                    updated_price = quantity * price
+                    AddCart.objects.filter(user = user, slug = slug).update(quantity = quantity, updated_price = updated_price)
+                    print("Updated Successfully")
+                    return Response(serializer.data, status=status.HTTP_201_CREATED)
             else:
                 serializer.save()
                 print("Added Successfully")
@@ -256,6 +256,8 @@ def addcart(request, slug):
     result['updated_price'] = result['price'] * result['quantity']
 
     print(result['updated_price'])
+
+    print(result)
 
     if result == []:
         messages.info(request, "This item is out of Stock")
