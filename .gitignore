@@ -5,7 +5,7 @@
 # .gitignore
 # Project files and directories
 static
-templates
+
 media
 assets
 secret.py
