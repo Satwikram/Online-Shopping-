@@ -60,10 +60,17 @@ class SearchListAPIView(ListAPIView):
 
 class CartAPIView(APIView):
 
-    def get(self, request):
+    def get_object(self, user):
+        try:
+            details = AddCart.objects.all().filter(user = user).values()
+            return details
+        except AddCart.DoesNotExist:
+            return HttpResponse(status = status.HTTP_404_NOT_FOUND)
 
-        product = AddCart.objects.all().order_by('-time')
-        serializer = CartSerializer(product,  many = True)
+    def get(self, request, user):
+
+        details = self.get_object(user)
+        serializer = CartSerializer(details,  many = True)
         return Response(serializer.data)
 
     def post(self, request):
@@ -256,7 +263,9 @@ def addcart(request, slug):
     messages.info(request, "Sucessfully Added to Cart")
     return HttpResponseRedirect((reverse('main')))
 
-def cart(request):
+def cart(request, user):
+
+    url = 'http://127.0.0.1:8000/add-to-cart/'
     return render(request, "cart.html")
 
 def checkout(request):
