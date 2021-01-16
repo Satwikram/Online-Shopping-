@@ -1,0 +1,88 @@
+ <!DOCTYPE html>
+ {% load static %}
+ {% static "images" as base %}
+<html>
+<head>
+<style>
+            viewport {
+  width: device-width; }
+
+            .card {
+              box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.45);
+              margin-top: 50px;
+              margin-right: 50px;
+              text-align: justify;
+              font-family: arial;
+              float: left;
+              white-space: pre-line;
+              width: 25%;
+              border: 1px  black;
+              background-color: #C9F6FF;
+              padding-top: 10px;
+              padding-right: 10px;
+              padding-bottom: 10px;
+              padding-left: 10px;
+            }
+
+            .price {
+              color: grey;
+              font-size: 22px;
+            }
+
+            .card button {
+              border: none;
+              outline: 0;
+              padding: 12px;
+              color: white;
+              background-color: #000;
+              text-align: center;
+              cursor: pointer;
+              width: 100%;
+              font-size: 18px;
+            }
+
+            .card button:hover {
+              opacity: 0.7;
+            }
+
+            ul#horizontal-list {
+                    min-width: 696px;
+                    list-style: none;
+                    padding-top: 20px;
+                    padding-bottom: 50px;
+             }
+
+	        ul#horizontal-list li {
+	    	display: inline;
+	        }
+	        footer {
+  display: block;
+}
+</style>
+
+</head>
+<body>
+
+          <ul id="horizontal-list">
+            <li>
+
+              {% for prod in prods %}
+              <ul>
+                <li>
+                <div class="card">
+                  <img src = "{{base}}/{{prod.img}}" alt="" style="width:100%">
+                  <h2>{{prod.name}}</h2>
+                  <p class="price">Rs.{{prod.price}}</p>
+                  <p>{{prod.des}}</p>
+                  <p><button>Add to Cart</button></p>
+                  <p><button>Buy Now</button></p>
+                </div>
+               </li>
+              </ul>
+              {% endfor %}
+            </li>
+          </ul>
+
+
+</body>
+ </html>

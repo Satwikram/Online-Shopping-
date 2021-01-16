@@ -1,0 +1,50 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sell Your Products</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="{% static 'css/sell.css' %}">
+
+</head>
+<body>
+
+<h2>Upload Details.</h2>
+
+<form name = "sell" action = 'sell' method = "post" enctype = "multipart/form-data">
+{% csrf_token %}
+
+    <input type = 'text' name = 'pname' placeholder="Product Name." required> <br> <br>
+
+    <input type = 'number' name = 'price' placeholder="Product Price." required> <br> <br>
+
+    <p>Product description in 50 - 200 words</p>
+
+
+     <textarea name="des" rows="10" cols="30"></textarea>
+    <br>
+
+     <p>Choose a file to upload Photo of your product.</p>
+
+    <input type = 'file' name = 'prod'>
+    <br>
+
+    <br>
+    <label>Choose a Category</label>
+     <select name="cat" id="cat">
+         <option selected="selected" disabled>Category</option>
+          <option value="Mobiles">Mobiles</option>
+          <option value="Laptops">Laptops</option>
+          <option value="Men Fashion">Men Fashion</option>
+          <option value="Women Fashion">Women Fashion</option>
+     </select>
+    <br>
+    <br>
+
+    <button type = 'submit' value="Select">Sell</button>
+
+</form>
+
+</body>
+</html>

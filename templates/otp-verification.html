@@ -1,0 +1,58 @@
+{% load static  %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>register</title>
+    <!--
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
+</head>
+<body>
+
+<link rel="stylesheet" href="{% static 'css/materialize.css' %}">
+
+<script>
+         M.toast({html: 'I am a toast!', displayLength : 2000});
+
+
+</script>
+
+<!--<script src="{% static 'js/register.js' %}"></script>-->
+
+<div class="container">
+
+    <h1>Email Verification</h1>
+
+    {% if messages %}
+    {% for message in messages %}
+    <a onclick="M.toast({html: 'I am a toast'})" class="btn">{{message}}</a>
+    {% endfor %}
+    {% endif %}
+
+    <p>Please Enter OTP to verify your Email.</p>
+    <p>Please note that, if your email is not verified you cannot Buy/Sell any products.</p>
+    <hr>
+    <form name = "otp" action="otp" method = post>
+        {% csrf_token %}
+
+    <label for="email"><b>Email:</b></label>
+    <input type="text" placeholder="Email" id="email" name="email"><br><br>
+
+    <label for="otp"><b>OTP:</b></label>
+    <input type="number" placeholder="Enter OTP" id="otp" name="otp"><br><br>
+
+    <button type="submit" class="waves-effect waves-light btn"s>Verify Email</button>
+
+    <hr>
+        </form>
+    <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+
+
+</div>
+
+<div class="container signin">
+    <p>Already have an account? <a href="login">Sign in</a>.</p>
+</div>
+</body>
+</html>

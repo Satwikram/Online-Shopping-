@@ -1,0 +1,69 @@
+{% load static  %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>register</title>
+    <!--
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
+</head>
+<body>
+
+<link rel="stylesheet" href="{% static 'css/materialize.css' %}">
+
+<script>
+         M.toast({html: 'I am a toast!', displayLength : 2000});
+
+
+</script>
+
+<!--<script src="{% static 'js/register.js' %}"></script>-->
+
+<div class="container">
+
+    <h1>Register</h1>
+
+    {% if messages %}
+    {% for message in messages %}
+    <a onclick="M.toast({html: 'I am a toast'})" class="btn">{{message}}</a>
+    {% endfor %}
+    {% endif %}
+
+    <p>Please fill in this form to create an account.</p>
+    <hr>
+    <form name = "register" action="register" method = post>
+        {% csrf_token %}
+
+    <label for="fname"><b>First name:</b></label>
+    <input type="text" placeholder="Enter First Name" id="fname" name="fname"><br><br>
+    <label for="lname"><b>Last name:</b></label>
+    <input type="text" placeholder="Enter Last Name" id="lname" name="lname"><br><br>
+
+
+    <label for="email"><b>Email</b></label>
+    <input type="text" placeholder="Enter a valid Email, an otp will be sent" name="email" id="email">
+
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" id="psw" name="psw">
+
+    <label for="psw-repeat"><b>Repeat Password</b></label>
+    <input type="password" placeholder="Repeat Password" id="psw-repeat" name="psw-repeat">
+
+    <label for="ph"><b>Phone</b></label>
+    <input type="number" placeholder="Phone" id="ph" name="ph">
+
+    <button type="submit" class="waves-effect waves-light btn"s>Sign Up</button>
+
+    <hr>
+        </form>
+    <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+
+
+</div>
+
+<div class="container signin">
+    <p>Already have an account? <a href="login">Sign in</a>.</p>
+</div>
+</body>
+</html>

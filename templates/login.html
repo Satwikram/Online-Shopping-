@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+
+    <link rel="stylesheet" href="{% static 'css/materialize.css'%}">
+
+</head>
+<body>
+ <div class="container">
+    <h1>Welcome Back!</h1>
+   <br>
+   <br>
+    <p>Login to your Account.</p>
+    <hr>
+     <form action="login" method="post">
+         {% csrf_token %}
+
+    <label for="ph"><b>Phone</b></label>
+    <input type="number" placeholder="Enter Phone Number" name="ph" required>
+
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="psw" required>
+
+    <hr>
+    <button type = submit class="waves-effect waves-light btn">Login</button>         <button type="reset" class="waves-effect waves-light btn">Cancel</button>
+
+
+   <br>
+   <br>
+   <br>
+    <span class="psw"><a href="forgot"> Forgot password?</a></span>
+     </form>
+
+     <marquee behavior="scroll" direction="left">Please Don't save password in any google pages</marquee>
+
+
+
+    <p>Don't Have Account? <a href="register">Sign up</a>.</p>
+     {% if messages %}
+         {% for message in messages %}
+
+            {{ message }}
+
+         {% endfor %}
+
+     {% endif %}
+
+  </div>
+</body>
+</html>
