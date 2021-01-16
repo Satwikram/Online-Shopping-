@@ -4,7 +4,6 @@
 
 # .gitignore
 # Project files and directories
-static
 
 media
 assets
