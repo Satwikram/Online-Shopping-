@@ -73,7 +73,7 @@ class CartAPIView(APIView):
         serializer = CartSerializer(details,  many = True)
         return Response(serializer.data)
 
-    def post(self, request):
+    def post(self, request, user):
 
         serializer = CartSerializer(data = request.data)
 
@@ -86,12 +86,13 @@ class CartAPIView(APIView):
                 quantity = AddCart.objects.filter(slug = slug).values('quantity')[0]['quantity']
                 print(quantity)
                 quantity = quantity + 1
-                price = quantity * price
-                AddCart.objects.filter(slug = slug).update(quantity = quantity, price = price)
+                updated_price = quantity * price
+                AddCart.objects.filter(slug = slug).update(quantity = quantity, updated_price = updated_price)
                 print("Updated Successfully")
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             else:
                 serializer.save()
+                print("Added Successfully")
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -254,13 +255,14 @@ def addcart(request, slug):
     result['quantity'] = 1
     result['updated_price'] = result['price'] * result['quantity']
 
+    print(result['updated_price'])
+
     if result == []:
         messages.info(request, "This item is out of Stock")
         return HttpResponseRedirect((reverse('main')))
 
-    url1 = "http://127.0.0.1:8000/add-to-cart"
+    url1 = "http://127.0.0.1:8000/add-to-cart/"+user
     requests.post(url1, data = result)
-    print("User is", request.user)
 
     messages.info(request, "Sucessfully Added to Cart")
     return HttpResponseRedirect((reverse('main')))
