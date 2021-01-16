@@ -23,6 +23,7 @@ class CartSerializer(serializers.ModelSerializer):
         model = AddCart
 
         fields = [
+            'id',
             'user',
             'slug',
             'quantity',
