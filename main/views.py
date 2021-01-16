@@ -278,7 +278,7 @@ def cart(request, user):
         print("obtained Result is",results)
         total = 0
         for result in results:
-            total += result['price']
+            total += result['updated_price']
         return render(request, "cart.html", {"results": results, "total": total})
 
 def checkout(request):
