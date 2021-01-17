@@ -101,8 +101,12 @@ class CartAPIView(APIView):
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request):
-        pass
+    def delete(self, request, user, slug):
+        if AddCart.objects.filter(user = user, slug = slug).exist():
+            AddCart.objects.filter(user=user, slug=slug).delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return JsonResponse(status=status.HTTP_400_BAD_REQUEST)
+
 """
 Author: Satwik Ram K
 Django API
@@ -296,4 +300,4 @@ def cart(request, user):
         return render(request, "cart.html", {"results": results, "total": total, "shipping": shipping})
 
 def checkout(request):
-    return render(request, "checkout.html")
+    pass
