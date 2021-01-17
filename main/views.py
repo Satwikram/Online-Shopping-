@@ -101,9 +101,12 @@ class CartAPIView(APIView):
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, user, slug):
+    def delete(self, request, slug):
+        user = request.user
+        slug = self.slug
         if AddCart.objects.filter(user = user, slug = slug).exist():
-            AddCart.objects.filter(user=user, slug=slug).delete()
+            AddCart.objects.filter(user = user, slug=slug).delete()
+            print("Successfully Deleted!")
             return Response(status=status.HTTP_204_NO_CONTENT)
         return JsonResponse(status=status.HTTP_400_BAD_REQUEST)
 
@@ -292,12 +295,26 @@ def cart(request, user):
         for result in results:
             total += result['updated_price']
 
-        if total <1000:
+        subtotal = total
+        if total <1000 and total > 0:
             shipping = 100
             total = total + shipping
         else:
             shipping = 0
-        return render(request, "cart.html", {"results": results, "total": total, "shipping": shipping})
+        return render(request, "cart.html", {"results": results, "total": total,"subtotal": subtotal, "shipping": shipping})
+
+def deleteitem(request, slug):
+
+    user = str(request.user)
+    slug = slug
+    url = "http://127.0.0.1:8000/add-to-cart/"+user
+    url1 = "http://127.0.0.1:8000/cart/"+user
+    #requests.delete(url, slug)
+    if AddCart.objects.filter(user = user, slug = slug).exists():
+        AddCart.objects.filter(user = user, slug = slug).delete()
+
+    return HttpResponseRedirect(url1)
 
 def checkout(request):
     pass
+
