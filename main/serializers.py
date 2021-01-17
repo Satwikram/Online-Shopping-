@@ -33,6 +33,7 @@ class CartSerializer(serializers.ModelSerializer):
             'product_image',
             'product_des',
             'product_category',
+            'shipping',
             'date',
             'time',
         ]
