@@ -145,7 +145,6 @@
                     <td>Rs.{{result.updated_price}}</td>
                     <td><a href="#" class="btn btn-primary btn-sm">X</a></td>
                   </tr>
-                {% endfor %}
                 </tbody>
               </table>
             </div>
@@ -191,6 +190,17 @@
                     <strong class="text-black">Rs.{{total}}</strong>
                   </div>
                 </div>
+
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <span class="text-black">Shipping</span>
+                  </div>
+                  <div class="col-md-6 text-right">
+                    <strong class="text-black">Rs.{{result.shipping}}</strong>
+                  </div>
+                </div>
+                {% endfor %}
+
                 <div class="row mb-5">
                   <div class="col-md-6">
                     <span class="text-black">Total</span>
