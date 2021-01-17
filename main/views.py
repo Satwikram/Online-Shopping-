@@ -255,12 +255,8 @@ def addcart(request, slug):
     result['quantity'] = 1
     result['updated_price'] = result['price'] * result['quantity']
 
-    if result['updated_price'] >= 1000:
-        result['shipping'] = 0
-    else:
-        result['shipping'] = 100
 
-    print(result['updated_price'], result['shipping'])
+    print(result['updated_price'])
 
     print(result)
 
