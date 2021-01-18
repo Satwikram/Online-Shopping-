@@ -118,7 +118,7 @@ def products1():
 
     prod1 = products()
     prod1.price = 1000
-    prod1.img = 'shoe_1.jpg'
+    prod1.img = 'Nike.jpg'
     prod1.name = 'Corater'
     prod1.des = 'Finding perfect products'
 
