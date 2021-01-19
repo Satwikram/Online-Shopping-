@@ -58,3 +58,15 @@ class AddCart(models.Model):
     product_category = models.CharField(max_length = 50, blank = True)
     date = models.CharField(max_length = 20)
     time = models.CharField(max_length = 20)
+
+class Billing(models.Model):
+
+    fname = models.CharField(max_length = 150)
+    lname = models.CharField(max_length = 150)
+    address = models.CharField(max_length = 1000)
+    landmark = models.CharField(max_length = 1000, blank = True, null = True)
+    state = models.CharField(max_length = 1000)
+    postal = models.CharField(max_length = 1000)
+    email = models.EmailField(verbose_name='email address',max_length=100, unique = True)
+    phone = models.CharField(max_length = 150)
+    notes = models.CharField(max_length = 1000)
