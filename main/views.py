@@ -316,5 +316,27 @@ def deleteitem(request, slug):
     return HttpResponseRedirect(url1)
 
 def checkout(request):
-    return render(request, "Checkout.html")
+
+    user = str(request.user)
+
+    if user == 'AnonymousUser':
+        return HttpResponse("Please Login to View the Cart.")
+    else:
+        url = 'http://127.0.0.1:8000/add-to-cart/'+user
+        response = requests.get(url = url)
+        results = response.json()
+        print("Checkout details is",results)
+
+        total = 0
+        for result in results:
+            total += result['updated_price']
+
+        subtotal = total
+        if total < 1000 and total > 0:
+            shipping = 100
+            total = total + shipping
+        else:
+            shipping = 0
+
+    return render(request, "Checkout.html", {"results": results, "total": total,"subtotal": subtotal, "shipping": shipping})
 
