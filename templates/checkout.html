@@ -302,21 +302,23 @@
                       <th>Total</th>
                     </thead>
                     <tbody>
+                    {% for result in results %}
                       <tr>
-                        <td>Top Up T-Shirt <strong class="mx-2">x</strong> 1</td>
-                        <td>$250.00</td>
+                        <td>{{result.product_name}} <strong class="mx-2">x</strong>{{result.quantity}}</td>
+                        <td>Rs.{{result.price}}</td>
                       </tr>
-                      <tr>
-                        <td>Polo Shirt <strong class="mx-2">x</strong>   1</td>
-                        <td>$100.00</td>
-                      </tr>
+                    {% endfor %}
                       <tr>
                         <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
-                        <td class="text-black">$350.00</td>
+                        <td class="text-black">Rs.{{subtotal}}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-black font-weight-bold"><strong>Shipping</strong></td>
+                        <td class="text-black">Rs.{{shipping}}</td>
                       </tr>
                       <tr>
                         <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
-                        <td class="text-black font-weight-bold"><strong>$350.00</strong></td>
+                        <td class="text-black font-weight-bold"><strong>{{total}}</strong></td>
                       </tr>
                     </tbody>
                   </table>
