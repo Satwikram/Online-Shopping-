@@ -59,7 +59,7 @@ class AddCart(models.Model):
     date = models.CharField(max_length = 20)
     time = models.CharField(max_length = 20)
 
-class Billing(models.Model):
+class BillingDetailsS(models.Model):
 
     fname = models.CharField(max_length = 150)
     lname = models.CharField(max_length = 150)
@@ -75,6 +75,7 @@ class Orders(models.Model):
 
     user = models.CharField(max_length = 50)
     slug = models.CharField(max_length = 150)
+    product = models.ForeignKey(SellProduct, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     price = models.FloatField(max_length = 100)
     updated_price = models.FloatField(max_length = 100)
