@@ -317,26 +317,40 @@ def deleteitem(request, slug):
 
 def checkout(request):
 
-    user = str(request.user)
+    if request.method == 'POST':
 
-    if user == 'AnonymousUser':
-        return HttpResponse("Please Login to View the Cart.")
+        fname = request.POST['fname']
+        lname = request.POST['lname']
+        address = request.POST['address']
+        landmark = request.POST['landmark']
+        state = request.POST['state']
+        postal = request.POST['postal']
+        email = request.POST['email']
+        phone = request.POST['phone']
+        notes = request.POST['notes']
+
+
     else:
-        url = 'http://127.0.0.1:8000/add-to-cart/'+user
-        response = requests.get(url = url)
-        results = response.json()
-        print("Checkout details is",results)
+        user = str(request.user)
 
-        total = 0
-        for result in results:
-            total += result['updated_price']
-
-        subtotal = total
-        if total < 1000 and total > 0:
-            shipping = 100
-            total = total + shipping
+        if user == 'AnonymousUser':
+            return HttpResponse("Please Login to View the Cart.")
         else:
-            shipping = 0
+            url = 'http://127.0.0.1:8000/add-to-cart/'+user
+            response = requests.get(url = url)
+            results = response.json()
+            print("Checkout details is",results)
 
-    return render(request, "Checkout.html", {"results": results, "total": total,"subtotal": subtotal, "shipping": shipping})
+            total = 0
+            for result in results:
+                total += result['updated_price']
+
+            subtotal = total
+            if total < 1000 and total > 0:
+                shipping = 100
+                total = total + shipping
+            else:
+                shipping = 0
+
+        return render(request, "Checkout.html", {"results": results, "total": total,"subtotal": subtotal, "shipping": shipping})
 
