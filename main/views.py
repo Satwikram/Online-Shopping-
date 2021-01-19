@@ -316,5 +316,5 @@ def deleteitem(request, slug):
     return HttpResponseRedirect(url1)
 
 def checkout(request):
-    pass
+    return render(request, "Checkout.html")
 
