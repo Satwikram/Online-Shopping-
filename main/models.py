@@ -70,3 +70,16 @@ class Billing(models.Model):
     email = models.EmailField(verbose_name='email address',max_length=100, unique = True)
     phone = models.CharField(max_length = 150)
     notes = models.CharField(max_length = 1000)
+
+class Orders(models.Model):
+
+    user = models.CharField(max_length = 50)
+    slug = models.CharField(max_length = 150)
+    quantity = models.IntegerField()
+    price = models.FloatField(max_length = 100)
+    updated_price = models.FloatField(max_length = 100)
+    product_name = models.CharField(max_length = 50)
+    product_image = models.CharField(max_length = 100, null = True)
+    product_des = models.TextField(max_length = 1000, blank = True)
+    product_category = models.CharField(max_length = 50, blank = True)
+    datetime = models.DateTimeField(auto_now_add = True)
