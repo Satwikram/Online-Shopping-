@@ -330,6 +330,9 @@ def checkout(request):
         notes = request.POST['notes']
 
 
+
+
+
     else:
         user = str(request.user)
 
