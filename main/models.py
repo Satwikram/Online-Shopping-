@@ -83,3 +83,4 @@ class Orders(models.Model):
     product_des = models.TextField(max_length = 1000, blank = True)
     product_category = models.CharField(max_length = 50, blank = True)
     datetime = models.DateTimeField(auto_now_add = True)
+    delivery = models.CharField(max_length = 100, default = False)
