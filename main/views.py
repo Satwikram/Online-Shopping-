@@ -1,3 +1,4 @@
+import json
 import os
 from datetime import datetime
 from datetime import date
@@ -114,6 +115,17 @@ class CartAPIView(APIView):
             print("Successfully Deleted!")
             return Response(status=status.HTTP_204_NO_CONTENT)
         return JsonResponse(status=status.HTTP_400_BAD_REQUEST)
+
+class CustomerOrdersAPI(APIView):
+
+    def get(self, request, user):
+        try:
+            details = CustomerOrders.objects.filter(user = user).values()
+            serializer = OrderSerializer(details, many = True)
+            return Response(serializer.data)
+
+        except AddCart.DoesNotExist:
+            return HttpResponse(status = status.HTTP_404_NOT_FOUND)
 
 """
 Author: Satwik Ram K
@@ -411,3 +423,11 @@ def checkout(request):
 
         return render(request, "Checkout.html", {"results": results, "total": total,"subtotal": subtotal, "shipping": shipping})
 
+def orders(request):
+
+    user = str(request.user)
+    url = "http://127.0.0.1:8000/orders/"+user
+    response = requests.get(url)
+    results = response.json()
+
+    return render(request, "orders.html", {"results", results})
