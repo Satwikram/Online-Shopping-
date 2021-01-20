@@ -58,8 +58,8 @@ class AddCart(models.Model):
     product_category = models.CharField(max_length = 50, blank = True)
     date = models.CharField(max_length = 20)
     time = models.CharField(max_length = 20)
-
-class BillingDetailsS(models.Model):
+"""
+class BillingDetails(models.Model):
 
     fname = models.CharField(max_length = 150)
     lname = models.CharField(max_length = 150)
@@ -69,19 +69,30 @@ class BillingDetailsS(models.Model):
     postal = models.CharField(max_length = 1000)
     email = models.EmailField(verbose_name='email address',max_length=100, unique = True)
     phone = models.CharField(max_length = 150)
-    notes = models.CharField(max_length = 1000)
+    user = models.CharField(max_length = 100)
+    notes = models.CharField(max_length = 1000, null = True, blank = True)
+"""
+class CustomerOrders(models.Model):
 
-class Orders(models.Model):
-
-    user = models.CharField(max_length = 50)
+    fname = models.CharField(max_length = 150)
+    lname = models.CharField(max_length = 150)
+    address = models.CharField(max_length = 1000)
+    landmark = models.CharField(max_length = 1000, blank = True, null = True)
+    state = models.CharField(max_length = 1000)
+    postal = models.CharField(max_length = 1000)
+    email = models.EmailField(verbose_name='email address',max_length=100, unique = True)
+    phone = models.CharField(max_length = 150)
+    user = models.CharField(max_length = 100)
+    notes = models.CharField(max_length = 1000, null = True, blank = True)
     slug = models.CharField(max_length = 150)
-    product = models.ForeignKey(SellProduct, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     price = models.FloatField(max_length = 100)
-    updated_price = models.FloatField(max_length = 100)
+    total_price = models.FloatField(max_length = 100)
     product_name = models.CharField(max_length = 50)
     product_image = models.CharField(max_length = 100, null = True)
     product_des = models.TextField(max_length = 1000, blank = True)
     product_category = models.CharField(max_length = 50, blank = True)
+    product_id = models.IntegerField()
+    shipping = models.FloatField(max_length = 100)
     datetime = models.DateTimeField(auto_now_add = True)
     delivery = models.CharField(max_length = 100, default = False)
