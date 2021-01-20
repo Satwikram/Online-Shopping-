@@ -277,6 +277,7 @@ def buy(request, slug):
    return render(request, "shop-single.html", {'results': results})
 
 
+
 def addcart(request, slug):
 
     slug = slug
@@ -451,5 +452,8 @@ def orders(request):
     return render(request, "orders.html",
                   {"results": results})
 
-def single(request, ):
+def single(request):
     return render(request, "shop-single.html")
+
+def about(request):
+    return render(request, "about.html")
