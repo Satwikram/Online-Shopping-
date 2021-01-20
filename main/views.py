@@ -384,8 +384,9 @@ def checkout(request):
             orders.shipping = shipping
             orders.save()
 
+            AddCart.objects.filter(slug = result['slug']).delete()
 
-        return HttpResponse("Successfully Placed the order")
+        return render(request, "thankyou.html")
 
     else:
         user = str(request.user)
