@@ -80,7 +80,7 @@ class CustomerOrders(models.Model):
     landmark = models.CharField(max_length = 1000, blank = True, null = True)
     state = models.CharField(max_length = 1000)
     postal = models.CharField(max_length = 1000)
-    email = models.EmailField(verbose_name='email address',max_length=100, unique = True)
+    email = models.EmailField(verbose_name='email address',max_length=100)
     phone = models.CharField(max_length = 150)
     user = models.CharField(max_length = 100)
     notes = models.CharField(max_length = 1000, null = True, blank = True)
