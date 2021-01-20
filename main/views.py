@@ -176,6 +176,7 @@ def Main(request):
 
     prods = products1()
 
+
     return render(request, "index.html", {'prods' : prods})
 
 def collection(request):
@@ -426,8 +427,21 @@ def checkout(request):
 def orders(request):
 
     user = str(request.user)
+    if user == 'AnonymousUser':
+        return HttpResponse("<h1>Please Login to View the Orders</h1>")
+
     url = "http://127.0.0.1:8000/orders/"+user
     response = requests.get(url)
     results = response.json()
 
-    return render(request, "orders.html", {"results", results})
+    if results == []:
+        messages.info(request, "You Don't Have Any Past Orders!")
+        return render(request, "orders.html")
+    for result in results:
+        if result['delivery'] == True:
+            result['delivery'] = 'Yes'
+        else:
+            result['delivery'] = 'No'
+
+    return render(request, "orders.html",
+                  {"results": results})
