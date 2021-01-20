@@ -339,6 +339,8 @@ def checkout(request):
         phone = request.POST['phone']
         notes = request.POST['notes']
 
+        print("Notes is",type(notes))
+
         if user == 'AnonymousUser':
             return HttpResponse("Please Login to View the Cart.")
         else:
@@ -357,9 +359,33 @@ def checkout(request):
             else:
                 shipping = 0
 
+        orders = CustomerOrders()
         for result in results:
-            print(result['slug'])
-        return HttpResponse(results)
+            print("Toral is",result['updated_price'])
+            id = SellProduct.objects.filter(slug = result['slug']).values('id')[0]['id']
+            orders.fname = fname
+            orders.lname = lname
+            orders.address = address
+            orders.landmark = landmark
+            orders.state = state
+            orders.postal = postal
+            orders.email = email
+            orders.phone = phone
+            orders.user = user
+            orders.slug = result['slug']
+            orders.quantity = result['quantity']
+            orders.price = result['price']
+            orders.total_price = result['updated_price']
+            orders.product_name = result['product_name']
+            orders.product_image = result['product_image']
+            orders.product_des = result['product_des']
+            orders.product_category = result['product_category']
+            orders.product_id = id
+            orders.shipping = shipping
+            orders.save()
+
+
+        return HttpResponse("Successfully Placed the order")
 
     else:
         user = str(request.user)
