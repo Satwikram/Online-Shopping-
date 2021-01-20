@@ -313,7 +313,6 @@ def addcart(request, slug):
     url1 = "http://127.0.0.1:8000/add-to-cart/"+user
     requests.post(url1, data = result)
 
-    messages.info(request, "Sucessfully Added to Cart")
     return HttpResponseRedirect((reverse('main')))
 
 def cart(request, user):
@@ -415,26 +414,35 @@ def checkout(request):
 
             #AddCart.objects.filter(slug = result['slug']).delete()
 
-            user_email = UserRegisteration.objects.filter(phone = user).values('email')[0]['email']
-            print(user_email)
-            subject = "Your Order Invoice"
-            to = [user_email]
-            from_email = EMAIL_HOST_USER
-            ctx = {
-                'address': address,
-                'user': user,
-                'date': datetime.now().date(),
-                'amount': result['price'],
-                'name': result['product_name'],
-                'quantity': result['quantity'],
-                'subtotal': result['updated_price'],
-                'shipping': shipping,
-                'total': total
-            }
-            message = render_to_string('invoice.html', ctx)
-            msg = EmailMessage(subject, message, to=to, from_email=from_email)
-            msg.content_subtype = 'html'
-            msg.send()
+        user_email = UserRegisteration.objects.filter(phone = user).values('email')[0]['email']
+        print(user_email)
+        subject = "Your Order Invoice"
+        to = [user_email]
+        from_email = EMAIL_HOST_USER
+        '''ctx = {
+            'address': address,
+            'user': user,
+            'date': datetime.now().date(),
+            'amount': result['price'],
+            'name': result['product_name'],
+            'quantity': result['quantity'],
+            'subtotal': result['updated_price'],
+            'shipping': shipping,
+            'total': total
+        }
+        '''
+        ctx1 = {
+            "results": results,
+            "date": datetime.now().date(),
+            "total": total,
+            "subtotal": subtotal,
+            "shipping": shipping
+        }
+
+        message = render_to_string('invoice.html', ctx1)
+        msg = EmailMessage(subject, message, to=to, from_email=from_email)
+        msg.content_subtype = 'html'
+        msg.send()
 
         return render(request, "thankyou.html")
 
