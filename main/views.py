@@ -274,7 +274,7 @@ def buy(request, slug):
    if results == []:
     messages.info(request,"This item is out of Stock")
     return render(request, 'notfound.html')
-   return render(request, "description.html", {'results': results})
+   return render(request, "shop-single.html", {'results': results})
 
 
 def addcart(request, slug):
@@ -450,3 +450,6 @@ def orders(request):
 
     return render(request, "orders.html",
                   {"results": results})
+
+def single(request, ):
+    return render(request, "shop-single.html")
