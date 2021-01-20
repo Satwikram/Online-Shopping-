@@ -19,6 +19,7 @@ urlpatterns = [
                 path('checkout', views.checkout, name = 'checkout'),
                 path('orders', views.orders, name = 'orders'),
                 path('single', views.single, name = 'single'),
+                path('about', views.about, name = 'about'),
 
 
                 # Django RestAPI URLS
