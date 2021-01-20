@@ -285,8 +285,13 @@ def addcart(request, slug):
     response = requests.get(url)
     result = response.json()
     result = result[0]
+
     user = request.user
     user = str(user)
+
+    if user == 'AnonymousUser':
+        return HttpResponse("<h1>Please Login to add to the cart.</h1>")
+
     result['user'] = user
     result['quantity'] = 1
     result['updated_price'] = result['price'] * result['quantity']
