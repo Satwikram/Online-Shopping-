@@ -4,8 +4,10 @@ from datetime import datetime
 from datetime import date
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
+from django.core.mail import EmailMessage
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
 from django.urls import reverse
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.generics import ListAPIView
@@ -13,8 +15,11 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import generics, status
 import requests
+
+from shopping.settings import EMAIL_HOST_USER
 from .serializers import *
 from main.models import products, SellProduct, CustProduct
+from online.models import *
 
 """
 Author: Satwik Ram K
@@ -367,21 +372,21 @@ def checkout(request):
 
         if user == 'AnonymousUser':
             return HttpResponse("Please Login to View the Cart.")
+
+        url = 'http://127.0.0.1:8000/add-to-cart/'+user
+        response = requests.get(url = url)
+        results = response.json()
+
+        total = 0
+        for result in results:
+            total += result['updated_price']
+
+        subtotal = total
+        if total < 1000 and total > 0:
+            shipping = 100
+            total = total + shipping
         else:
-            url = 'http://127.0.0.1:8000/add-to-cart/'+user
-            response = requests.get(url = url)
-            results = response.json()
-
-            total = 0
-            for result in results:
-                total += result['updated_price']
-
-            subtotal = total
-            if total < 1000 and total > 0:
-                shipping = 100
-                total = total + shipping
-            else:
-                shipping = 0
+            shipping = 0
 
         orders = CustomerOrders()
         for result in results:
@@ -406,9 +411,30 @@ def checkout(request):
             orders.product_category = result['product_category']
             orders.product_id = id
             orders.shipping = shipping
-            orders.save()
+            #orders.save()
 
-            AddCart.objects.filter(slug = result['slug']).delete()
+            #AddCart.objects.filter(slug = result['slug']).delete()
+
+            user_email = UserRegisteration.objects.filter(phone = user).values('email')[0]['email']
+            print(user_email)
+            subject = "Your Order Invoice"
+            to = [user_email]
+            from_email = EMAIL_HOST_USER
+            ctx = {
+                'address': address,
+                'user': user,
+                'date': datetime.now().date(),
+                'amount': result['price'],
+                'name': result['product_name'],
+                'quantity': result['quantity'],
+                'subtotal': result['updated_price'],
+                'shipping': shipping,
+                'total': total
+            }
+            message = render_to_string('invoice.html', ctx)
+            msg = EmailMessage(subject, message, to=to, from_email=from_email)
+            msg.content_subtype = 'html'
+            msg.send()
 
         return render(request, "thankyou.html")
 
