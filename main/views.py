@@ -175,9 +175,14 @@ def CustProducts():
 def Main(request):
 
     prods = products1()
+    if str(request.user) == 'AnonymousUser':
+        orders = 0
+    else:
+        results = AddCart.objects.filter(user = str(request.user)).values()
+        orders = len(results)
+        print(orders)
 
-
-    return render(request, "index.html", {'prods' : prods})
+    return render(request, "index.html", {'prods' : prods, 'orders': orders})
 
 def collection(request):
 
