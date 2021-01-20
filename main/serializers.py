@@ -8,6 +8,7 @@ class SellSerializer(serializers.ModelSerializer):
         model = SellProduct
 
         fields = [
+            'id',
             'slug',
             'price',
             'product_name',
@@ -19,6 +20,7 @@ class SellSerializer(serializers.ModelSerializer):
         ]
 
 class CartSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = AddCart
 
