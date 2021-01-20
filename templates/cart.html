@@ -121,6 +121,11 @@
                   </tr>
                 </thead>
                 <tbody>
+                {% if messages %}
+                  {% for message in messages %}
+                <h1>{{message}}</h1>
+                  {% endfor %}
+                {% endif %}
                 {% for result in results %}
                   <tr>
                     <td class="product-thumbnail">
