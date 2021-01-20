@@ -38,3 +38,9 @@ class CartSerializer(serializers.ModelSerializer):
             'date',
             'time',
         ]
+
+class OrderSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CustomerOrders
+        fields = '__all__'
