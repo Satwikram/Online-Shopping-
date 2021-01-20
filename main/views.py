@@ -61,6 +61,7 @@ class SearchListAPIView(ListAPIView):
 class CartAPIView(APIView):
 
     def get_object(self, user):
+        print("Am in Get Object")
         try:
             details = AddCart.objects.all().filter(user = user).values()
             return details
@@ -68,14 +69,18 @@ class CartAPIView(APIView):
             return HttpResponse(status = status.HTTP_404_NOT_FOUND)
 
     def get(self, request, user):
-
+        print("Am in Get")
         details = self.get_object(user)
         serializer = CartSerializer(details,  many = True)
+        print("Get Data is",serializer.data)
         return Response(serializer.data)
 
     def post(self, request, user):
 
+        print("Am in Post API")
         serializer = CartSerializer(data = request.data)
+        print("Post Data", request.data)
+        print("Post Data", request.data.get('product'))
 
         if serializer.is_valid():
             slug = serializer.validated_data['slug']
@@ -269,7 +274,7 @@ def addcart(request, slug):
 
     print(result['updated_price'])
 
-    print(result)
+    print("Cart Details is", result)
 
 
     if result == []:
@@ -301,6 +306,10 @@ def cart(request, user):
             total = total + shipping
         else:
             shipping = 0
+
+        if results == []:
+            messages.info(request, "Your Cart is Empty")
+            return render(request, "cart.html", {"results": results, "total": total,"subtotal": subtotal, "shipping": shipping})
         return render(request, "cart.html", {"results": results, "total": total,"subtotal": subtotal, "shipping": shipping})
 
 def deleteitem(request, slug):
@@ -319,6 +328,7 @@ def checkout(request):
 
     if request.method == 'POST':
 
+        user = str(request.user)
         fname = request.POST['fname']
         lname = request.POST['lname']
         address = request.POST['address']
@@ -329,9 +339,27 @@ def checkout(request):
         phone = request.POST['phone']
         notes = request.POST['notes']
 
+        if user == 'AnonymousUser':
+            return HttpResponse("Please Login to View the Cart.")
+        else:
+            url = 'http://127.0.0.1:8000/add-to-cart/'+user
+            response = requests.get(url = url)
+            results = response.json()
 
+            total = 0
+            for result in results:
+                total += result['updated_price']
 
+            subtotal = total
+            if total < 1000 and total > 0:
+                shipping = 100
+                total = total + shipping
+            else:
+                shipping = 0
 
+        for result in results:
+            print(result['slug'])
+        return HttpResponse(results)
 
     else:
         user = str(request.user)
@@ -342,7 +370,6 @@ def checkout(request):
             url = 'http://127.0.0.1:8000/add-to-cart/'+user
             response = requests.get(url = url)
             results = response.json()
-            print("Checkout details is",results)
 
             total = 0
             for result in results:
