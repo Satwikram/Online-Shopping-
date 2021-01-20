@@ -58,6 +58,9 @@ class AddCart(models.Model):
     product_category = models.CharField(max_length = 50, blank = True)
     date = models.CharField(max_length = 20)
     time = models.CharField(max_length = 20)
+
+    def __str__(self):
+        return self.product_name
 """
 class BillingDetails(models.Model):
 
@@ -96,3 +99,6 @@ class CustomerOrders(models.Model):
     shipping = models.FloatField(max_length = 100)
     datetime = models.DateTimeField(auto_now_add = True)
     delivery = models.CharField(max_length = 100, default = False)
+
+    def __str__(self):
+        return self.product_name
