@@ -17,12 +17,14 @@ urlpatterns = [
                 path('cart/<str:user>', views.cart, name='cart'),
                 path('deleteitem/<str:slug>', views.deleteitem, name='deleteitem'),
                 path('checkout', views.checkout, name = 'checkout'),
+                path('orders', views.orders, name = 'orders'),
 
                 # Django RestAPI URLS
                 path('search/', SearchListAPIView.as_view(), name = "search"),
                 path('products/', ProductsAPIView.as_view(), name = "products"),
                 path('details/<str:slug>', ProductDetailsAPIView.as_view(), name = "ProductDetails"),
                 path('add-to-cart/<str:user>', CartAPIView.as_view(), name="addcart"),
+                path('orders/<str:user>', CustomerOrdersAPI.as_view(), name = "orders"),
 
 ]
 
